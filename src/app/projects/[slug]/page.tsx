@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import { ChevronRight, ExternalLink } from "lucide-react";
 import { Container } from "@/components/ui/Container";
+import { LoadingSkeleton } from "@/components/ui/LoadingSkeleton";
 import { ProjectCard } from "@/components/ui/ProjectCard";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { TechnologyTag } from "@/components/ui/TechnologyTag";
 import { Reveal } from "@/components/ui/Reveal";
 import { getProjectBySlug, getPublishedProjects } from "@/lib/queries";
+import type { PublicProject } from "@/lib/queries";
 
 export async function generateStaticParams() {
   const projects = await getPublishedProjects();
@@ -17,11 +20,14 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({
   params,
+  searchParams,
 }: {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<{ t?: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const project = await getProjectBySlug(slug);
+  const { t } = await searchParams;
+  const project = await getProjectBySlug(slug, t);
   if (!project) return { title: "Proyek tidak ditemukan — Fairuz.dev" };
   return {
     title: `${project.title} — Fairuz.dev`,
@@ -32,6 +38,7 @@ export async function generateMetadata({
       description: project.summary,
       images: project.coverImageUrl ? [{ url: project.coverImageUrl }] : undefined,
     },
+    robots: project.preview ? { index: false, follow: false } : undefined,
   };
 }
 
@@ -54,19 +61,75 @@ function DetailBlock({
 
 export default async function ProjectDetailPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<{ t?: string }>;
 }) {
   const { slug } = await params;
+  // published-only di sini agar prerender statis tetap jalan; token
+  // ditangani di DraftPreview (streaming) di bawah.
   const project = await getProjectBySlug(slug);
+  if (project) {
+    const published = await getPublishedProjects();
+    return (
+      <DetailView
+        project={project}
+        related={published.filter((item) => item.slug !== slug)}
+      />
+    );
+  }
+  return (
+    <section className="py-12 sm:py-16">
+      <Container>
+        <div className="mx-auto max-w-3xl">
+          <Suspense fallback={<LoadingSkeleton lines={5} />}>
+            <DraftPreview slug={slug} searchParams={searchParams} />
+          </Suspense>
+        </div>
+      </Container>
+    </section>
+  );
+}
+
+async function DraftPreview({
+  slug,
+  searchParams,
+}: {
+  slug: string;
+  searchParams: Promise<{ t?: string }>;
+}) {
+  const { t } = await searchParams;
+  const project = await getProjectBySlug(slug, t);
   if (!project) notFound();
   const published = await getPublishedProjects();
-  const related = published.filter((item) => item.slug !== slug);
+  return (
+    <DetailView
+      project={project}
+      related={published.filter((item) => item.slug !== slug)}
+    />
+  );
+}
 
+async function DetailView({
+  project,
+  related,
+}: {
+  project: PublicProject;
+  related: PublicProject[];
+}) {
   return (
     <>
       <section className="py-12 sm:py-16">
         <Container>
+          {project.preview ? (
+            <p
+              role="status"
+              className="mb-6 inline-block rounded-control border border-warning/40 bg-warning/10 px-3 py-1.5 text-xs font-medium text-warning"
+            >
+              Mode pratinjau — draft ini tidak publik dan tidak terindeks.
+            </p>
+          ) : null}
           <Reveal>
             <nav aria-label="Breadcrumb">
             <ol className="flex flex-wrap items-center gap-1.5 text-sm text-muted">

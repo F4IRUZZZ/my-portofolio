@@ -15,30 +15,44 @@ import { getArticleBySlug } from "@/lib/queries";
 
 export async function generateMetadata({
   params,
+  searchParams,
 }: {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<{ t?: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const article = await getArticleBySlug(slug);
+  const { t } = await searchParams;
+  const article = await getArticleBySlug(slug, t);
   if (!article) return { title: "Artikel tidak ditemukan — Fairuz.dev" };
   return {
     title: `${article.title} — Fairuz.dev`,
     description: article.excerpt,
     openGraph: { title: article.title, description: article.excerpt },
+    robots: article.preview ? { index: false, follow: false } : undefined,
   };
 }
 
 async function ArticleContent({
   params,
+  previewToken,
 }: {
   params: Promise<{ slug: string }>;
+  previewToken?: string;
 }) {
   const { slug } = await params;
-  const article = await getArticleBySlug(slug);
+  const article = await getArticleBySlug(slug, previewToken);
   if (!article) notFound();
 
   return (
     <>
+      {article.preview ? (
+        <p
+          role="status"
+          className="mb-6 inline-block rounded-control border border-warning/40 bg-warning/10 px-3 py-1.5 text-xs font-medium text-warning"
+        >
+          Mode pratinjau — draft ini tidak publik dan tidak terindeks.
+        </p>
+      ) : null}
       <Reveal>
         <nav aria-label="Breadcrumb">
         <ol className="flex flex-wrap items-center gap-1.5 text-sm text-muted">
@@ -97,18 +111,34 @@ async function ArticleContent({
 
 export default function ArticleDetailPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<{ t?: string }>;
 }) {
   return (
     <section className="py-12 sm:py-16">
       <Container>
         <div className="mx-auto max-w-2xl">
           <Suspense fallback={<LoadingSkeleton lines={5} />}>
-            <ArticleContent params={params} />
+            <PreviewTokenLoader
+              params={params}
+              searchParams={searchParams}
+            />
           </Suspense>
         </div>
       </Container>
     </section>
   );
+}
+
+async function PreviewTokenLoader({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ t?: string }>;
+}) {
+  const { t } = await searchParams;
+  return <ArticleContent params={params} previewToken={t} />;
 }

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { getAdminArticle } from "@/lib/admin-queries";
+import { PreviewLinkBox } from "../../../_components/PreviewLinkBox";
 import { ArticleForm } from "../../ArticleForm";
 
 export const metadata: Metadata = {
@@ -29,7 +30,14 @@ export default async function EditArticlePage({
           ← Kembali ke daftar
         </Link>
       </p>
-      <div className="mt-6">
+      <div className="mt-6 flex flex-col gap-6">
+        <PreviewLinkBox
+          kind="article"
+          id={item.id}
+          slug={item.slug}
+          initialToken={item.previewToken}
+          basePath="/articles"
+        />
         <ArticleForm item={item} />
       </div>
     </div>

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { getAdminProject } from "@/lib/admin-queries";
+import { PreviewLinkBox } from "../../../_components/PreviewLinkBox";
 import { ProjectForm } from "../../ProjectForm";
 
 export const metadata: Metadata = {
@@ -29,7 +30,14 @@ export default async function EditProjectPage({
           ← Kembali ke daftar
         </Link>
       </p>
-      <div className="mt-6">
+      <div className="mt-6 flex flex-col gap-6">
+        <PreviewLinkBox
+          kind="project"
+          id={project.id}
+          slug={project.slug}
+          initialToken={project.previewToken}
+          basePath="/projects"
+        />
         <ProjectForm project={project} />
       </div>
     </div>
