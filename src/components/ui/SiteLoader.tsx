@@ -4,8 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useMounted } from "@/lib/use-mounted";
 
-const COUNT_DURATION_MS = 1100;
-const CURTAIN_DURATION_MS = 450;
+const COUNT_DURATION_MS = 1800;
+const CURTAIN_DURATION_MS = 600;
 
 /*
  * Intro loader dekoratif ala Lusion: logo + counter 0–100 + bar aksen,
