@@ -26,6 +26,12 @@ export async function generateMetadata({
   return {
     title: `${project.title} — Fairuz.dev`,
     description: project.summary,
+    alternates: { canonical: `/projects/${project.slug}` },
+    openGraph: {
+      title: project.title,
+      description: project.summary,
+      images: project.coverImageUrl ? [{ url: project.coverImageUrl }] : undefined,
+    },
   };
 }
 
