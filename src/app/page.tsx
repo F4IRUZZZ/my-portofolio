@@ -104,6 +104,8 @@ export default async function Home() {
                 scope={achievement.scope}
                 year={achievement.year}
                 description={achievement.description}
+                evidenceUrl={achievement.evidenceUrl}
+                evidenceLabel="Lihat piagam"
               />
             </div>
             <Link

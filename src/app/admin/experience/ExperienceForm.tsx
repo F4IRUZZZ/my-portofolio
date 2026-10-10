@@ -101,6 +101,15 @@ export function ExperienceForm({ item }: { item?: AdminExperienceRow }) {
         <input id="relatedProjectSlug" name="relatedProjectSlug" defaultValue={val(state, item?.relatedProjectSlug, "relatedProjectSlug")} className={inputClass} />
       </FormField>
 
+      <FormField
+        id="evidenceUrl"
+        label="URL bukti (opsional)"
+        hint="Cth: /documents/sertifikat-pkl-its-2026.jpg. Kosongkan bila tidak ada."
+        error={err(state, "evidenceUrl")}
+      >
+        <input id="evidenceUrl" name="evidenceUrl" defaultValue={val(state, item?.evidenceUrl, "evidenceUrl")} placeholder="/documents/… atau https://…" className={inputClass} />
+      </FormField>
+
       <SubmitButtons />
     </form>
   );

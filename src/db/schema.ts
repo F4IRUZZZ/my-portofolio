@@ -141,6 +141,7 @@ export const experiences = pgTable("experiences", {
     .notNull()
     .default(sql`'{}'::text[]`),
   relatedProjectSlug: text("related_project_slug"),
+  evidenceUrl: text("evidence_url"),
   publicationStatus: publicationStatusEnum("publication_status")
     .notNull()
     .default("draft"),

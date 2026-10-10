@@ -146,8 +146,8 @@ async function main() {
       competedAt: "2026-02-09",
       announcedAt: "2026-02-11",
       description:
-        "Meraih Juara 3 LKS tingkat Kota Surabaya bidang Artificial Intelligence. Lomba dilaksanakan pada 9 Februari 2026 di SMK Negeri 1 Surabaya, dengan pengumuman juara serta penyerahan sertifikat dan piala pada 11 Februari.",
-      evidenceUrl: null,
+        "Meraih Juara 3 LKS tingkat Kota Surabaya bidang Artificial Intelligence. Diselenggarakan oleh MKKS Kota Surabaya pada 9–11 Februari 2026 sesuai piagam penghargaan.",
+      evidenceUrl: "/documents/piagam-lks-2026.jpg",
       publicationStatus: "published",
       sortOrder: 1,
     });
@@ -161,11 +161,12 @@ async function main() {
         summary:
           "Mendukung layanan mahasiswa pada masa awal PKL, kemudian mengerjakan proyek website layanan pengurusan KTM hilang menjelang akhir periode.",
         responsibilities: [
-          "Dukungan layanan mahasiswa (tugas operasional, bukan coding).",
+          "Dukungan layanan mahasiswa (tugas operasional, bukan coding): layanan customer/mahasiswa, surat keterangan mahasiswa, legalisasi transkrip, dan persiapan pelaksanaan wisuda.",
           "Kontribusi pada proyek website layanan KTM hilang dengan PHP berpola MVC — dicatat terpisah dari tugas layanan.",
         ],
         technologies: ["PHP", "CSS", "MySQL", "MVC"],
         relatedProjectSlug: "sistem-layanan-ktm-hilang",
+        evidenceUrl: "/documents/sertifikat-pkl-its-2026.jpg",
         publicationStatus: "published",
         sortOrder: 1,
       },

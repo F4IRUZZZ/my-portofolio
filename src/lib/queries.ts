@@ -196,6 +196,7 @@ export type PublicAchievement = {
   year: string;
   description: string;
   detail: string;
+  evidenceUrl?: string;
 };
 
 export async function getAchievement(): Promise<PublicAchievement | null> {
@@ -218,6 +219,7 @@ export async function getAchievement(): Promise<PublicAchievement | null> {
     year: row.competedAt ? row.competedAt.slice(0, 4) : "",
     description: row.description,
     detail: `Detail tanggal: lomba ${row.competedAt ? formatDateId(row.competedAt) : "—"}, pengumuman ${row.announcedAt ? formatDateId(row.announcedAt) : "—"}.`,
+    evidenceUrl: row.evidenceUrl ?? undefined,
   };
 }
 
@@ -230,6 +232,7 @@ export type PublicExperience = {
   technologies: string[];
   relatedProjectHref?: string;
   relatedProjectLabel?: string;
+  evidenceUrl?: string;
 };
 
 export async function getExperiences(): Promise<PublicExperience[]> {
@@ -258,5 +261,6 @@ export async function getExperiences(): Promise<PublicExperience[]> {
     relatedProjectLabel: row.relatedProjectSlug
       ? "Lihat proyek terkait"
       : undefined,
+    evidenceUrl: row.evidenceUrl ?? undefined,
   }));
 }
