@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useMounted } from "@/lib/use-mounted";
 
 type RevealProps = {
   children: ReactNode;
@@ -10,12 +11,15 @@ type RevealProps = {
 };
 
 /*
- * Memunculkan konten sekali saat masuk viewport. Tanpa-JS atau observer
- * tak tersedia: konten tetap terlihat (tidak pernah disembunyikan di SSR).
+ * Memunculkan konten sekali saat masuk viewport. Render pertama (SSR dan
+ * hydration) selalu terlihat sehingga identik di server dan klien;
+ * status tersembunyi hanya diterapkan pasca-mount. Tanpa-JS atau observer
+ * tak tersedia: konten tetap terlihat.
  */
 export function Reveal({ children, delay = 0, className = "" }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
+  const mounted = useMounted();
+  const [inView, setInView] = useState(false);
 
   useEffect(() => {
     const node = ref.current;
@@ -24,13 +28,13 @@ export function Reveal({ children, delay = 0, className = "" }: RevealProps) {
       // Fallback sekali saat mount untuk browser tanpa observer:
       // aman dari cascading render (satu panggilan, tanpa langganan).
       // eslint-disable-next-line react-hooks/set-state-in-effect
-      setVisible(true);
+      setInView(true);
       return;
     }
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries.some((entry) => entry.isIntersecting)) {
-          setVisible(true);
+          setInView(true);
           observer.disconnect();
         }
       },
@@ -40,11 +44,13 @@ export function Reveal({ children, delay = 0, className = "" }: RevealProps) {
     return () => observer.disconnect();
   }, []);
 
+  const hidden = mounted && !inView;
+
   return (
     <div
       ref={ref}
       style={delay > 0 ? { transitionDelay: `${delay}ms` } : undefined}
-      className={`reveal${visible ? " reveal-visible" : ""}${className ? ` ${className}` : ""}`}
+      className={`reveal${hidden ? " reveal-hidden" : ""}${className ? ` ${className}` : ""}`}
     >
       {children}
     </div>

@@ -63,15 +63,6 @@ export default function RootLayout({
 }: LayoutProps<"/">) {
   return (
     <html lang="id" className={geist.className}>
-      <head>
-        {/* Tandai kapabilitas JS sepagi mungkin agar Reveal tanpa-flash;
-            tanpa-JS: kelas tak ada, konten tetap terlihat. */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: "document.documentElement.classList.add('js')",
-          }}
-        />
-      </head>
       <body className="min-h-screen bg-background text-foreground antialiased">
         <a
           href="#konten"
