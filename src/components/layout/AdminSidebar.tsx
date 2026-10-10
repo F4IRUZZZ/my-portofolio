@@ -13,6 +13,7 @@ import {
   X,
 } from "lucide-react";
 import { useState } from "react";
+import { useMounted } from "@/lib/use-mounted";
 
 const ADMIN_LINKS = [
   { href: "/admin", label: "Dashboard", Icon: LayoutDashboard },
@@ -26,11 +27,16 @@ const ADMIN_LINKS = [
 
 function AdminNavList({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();
+  // Sama seperti Navbar: tandai aktif hanya setelah mount.
+  const activePath = useMounted() ? pathname : null;
   return (
     <ul className="flex flex-col gap-1">
       {ADMIN_LINKS.map(({ href, label, Icon }) => {
         const active =
-          href === "/admin" ? pathname === href : pathname.startsWith(href);
+          activePath !== null &&
+          (href === "/admin"
+            ? activePath === href
+            : activePath.startsWith(href));
         return (
           <li key={href}>
             <Link
