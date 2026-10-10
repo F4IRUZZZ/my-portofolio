@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ProjectCard } from "@/components/ui/ProjectCard";
-import { projects } from "@/data/portfolio";
+import { getPublishedProjects } from "@/lib/queries";
 
 export const metadata: Metadata = {
   title: "Daftar Proyek — Fairuz.dev",
@@ -10,7 +10,9 @@ export const metadata: Metadata = {
     "Karya Alfairuz Atthariq Satria selama pembelajaran dan PKL, ditulis apa adanya.",
 };
 
-export default function ProjectsPage() {
+export default async function ProjectsPage() {
+  const projects = await getPublishedProjects();
+
   return (
     <section className="py-16 sm:py-20">
       <Container>
