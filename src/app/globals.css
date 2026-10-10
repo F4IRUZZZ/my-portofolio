@@ -88,3 +88,61 @@ body {
   opacity: 0;
   transform: translateY(20px);
 }
+
+/*
+ * SiteLoader: intro dekoratif (logo + counter + bar), tirai tersibak.
+ * Hanya dirender JS; tanpa-JS tidak ada overlay. Durasi tirai lewat
+ * variabel --loader-curtain-ms dari komponen.
+ */
+.site-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-background);
+  transition: transform var(--loader-curtain-ms, 450ms) ease-in-out;
+}
+
+.site-loader-leaving {
+  transform: translateY(-100%);
+}
+
+.site-loader-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 0 1.5rem;
+}
+
+.site-loader-brand {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-foreground);
+}
+
+.site-loader-accent {
+  color: var(--color-accent);
+}
+
+.site-loader-bar {
+  width: min(16rem, 60vw);
+  height: 2px;
+  overflow: hidden;
+  border-radius: 999px;
+  background-color: var(--color-border);
+}
+
+.site-loader-fill {
+  height: 100%;
+  background-color: var(--color-accent);
+}
+
+.site-loader-count {
+  font-size: 0.875rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-muted);
+}

@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import "./globals.css";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import { SiteLoader } from "@/components/ui/SiteLoader";
 import { getSiteUrl } from "@/lib/site";
 
 const geist = Geist({
@@ -70,6 +71,9 @@ export default function RootLayout({
         >
           Lewati ke konten utama
         </a>
+        <Suspense fallback={null}>
+          <SiteLoader />
+        </Suspense>
         <NavbarShell />
         <div id="konten">{children}</div>
         <Footer />
