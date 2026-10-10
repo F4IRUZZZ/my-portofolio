@@ -80,6 +80,7 @@ async function main() {
             "Belum tuntas ketika periode PKL berakhir. Dipublikasikan apa adanya sebagai arsip pembelajaran.",
           repositoryUrl: null,
           demoUrl: null,
+          coverImageUrl: "/documents/ktm-pengganti-beranda.jpg",
           sortOrder: 1,
           publishedAt,
         },
