@@ -123,6 +123,8 @@ export type PublicProject = {
   repositoryUrl: string | null;
   demoUrl: string | null;
   coverImageUrl: string | null;
+  publicationStatus: "draft" | "published";
+  preview: boolean;
 };
 
 async function toPublicProject(
@@ -152,6 +154,8 @@ async function toPublicProject(
     repositoryUrl: row.repositoryUrl,
     demoUrl: row.demoUrl,
     coverImageUrl: row.coverImageUrl,
+    publicationStatus: row.publicationStatus,
+    preview: false,
   };
 }
 
@@ -230,6 +234,7 @@ export async function getProjectFilterOptions(): Promise<ProjectFilterOptions> {
 
 export async function getProjectBySlug(
   slug: string,
+  token?: string,
 ): Promise<PublicProject | undefined> {
   "use cache";
   cacheLife("hours");
@@ -238,16 +243,16 @@ export async function getProjectBySlug(
   const rows = await db
     .select()
     .from(projects)
-    .where(
-      and(
-        eq(projects.slug, slug),
-        eq(projects.publicationStatus, "published"),
-      ),
-    )
+    .where(eq(projects.slug, slug))
     .limit(1);
   const row = rows[0];
   if (!row) return undefined;
-  return toPublicProject(db, row);
+  const viaToken = Boolean(
+    token && row.previewToken && token === row.previewToken,
+  );
+  if (row.publicationStatus !== "published" && !viaToken) return undefined;
+  const full = await toPublicProject(db, row);
+  return { ...full, preview: viaToken && row.publicationStatus !== "published" };
 }
 
 export type PublicAchievement = {
@@ -333,6 +338,8 @@ export type PublicArticle = {
   content: string;
   coverImageUrl: string | null;
   publishedLabel: string;
+  publicationStatus: "draft" | "published";
+  preview: boolean;
 };
 
 function toPublicArticle(row: typeof articles.$inferSelect): PublicArticle {
@@ -345,6 +352,8 @@ function toPublicArticle(row: typeof articles.$inferSelect): PublicArticle {
     publishedLabel: row.publishedAt
       ? formatDateId(row.publishedAt.toISOString().slice(0, 10))
       : "",
+    publicationStatus: row.publicationStatus,
+    preview: false,
   };
 }
 
@@ -363,6 +372,7 @@ export async function getPublishedArticles(): Promise<PublicArticle[]> {
 
 export async function getArticleBySlug(
   slug: string,
+  token?: string,
 ): Promise<PublicArticle | undefined> {
   "use cache";
   cacheLife("hours");
@@ -371,14 +381,14 @@ export async function getArticleBySlug(
   const rows = await db
     .select()
     .from(articles)
-    .where(
-      and(
-        eq(articles.slug, slug),
-        eq(articles.publicationStatus, "published"),
-      ),
-    )
+    .where(eq(articles.slug, slug))
     .limit(1);
   const row = rows[0];
   if (!row) return undefined;
-  return toPublicArticle(row);
+  const viaToken = Boolean(
+    token && row.previewToken && token === row.previewToken,
+  );
+  if (row.publicationStatus !== "published" && !viaToken) return undefined;
+  const full = toPublicArticle(row);
+  return { ...full, preview: viaToken && row.publicationStatus !== "published" };
 }

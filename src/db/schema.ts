@@ -83,6 +83,7 @@ export const projects = pgTable("projects", {
   repositoryUrl: text("repository_url"),
   demoUrl: text("demo_url"),
   coverImageUrl: text("cover_image_url"),
+  previewToken: text("preview_token").unique(),
   sortOrder: integer("sort_order").notNull().default(0),
   publishedAt: timestamp("published_at", { withTimezone: true }),
   ...timestamps,
@@ -156,6 +157,7 @@ export const articles = pgTable("articles", {
   excerpt: text("excerpt").notNull(),
   content: text("content").notNull(),
   coverImageUrl: text("cover_image_url"),
+  previewToken: text("preview_token").unique(),
   publicationStatus: publicationStatusEnum("publication_status")
     .notNull()
     .default("draft"),
