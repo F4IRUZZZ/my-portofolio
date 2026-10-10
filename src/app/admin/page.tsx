@@ -98,6 +98,16 @@ export default async function AdminPage() {
           value={counts.experiencesCount}
           href="/admin/experience"
         />
+        <StatCard
+          label="Artikel published"
+          value={counts.articlesPublished}
+          href="/admin/articles"
+        />
+        <StatCard
+          label="Artikel draft"
+          value={counts.articlesDraft}
+          href="/admin/articles"
+        />
       </div>
 
       <h2 className="mt-10 text-lg font-semibold text-foreground">

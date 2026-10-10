@@ -135,3 +135,19 @@ export type ProjectInput = z.infer<typeof projectSchema>;
 export type AchievementInput = z.infer<typeof achievementSchema>;
 export type ExperienceInput = z.infer<typeof experienceSchema>;
 export type ProfileInput = z.infer<typeof profileSchema>;
+
+export const articleSchema = z.object({
+  title: z.string().trim().min(3, "Judul minimal 3 karakter.").max(160),
+  slug: z
+    .string()
+    .trim()
+    .min(3, "Slug minimal 3 karakter.")
+    .max(160)
+    .regex(/^[a-z0-9-]+$/, "Slug hanya huruf kecil, angka, dan strip."),
+  excerpt: z.string().trim().min(10, "Ringkasan minimal 10 karakter.").max(300),
+  content: z.string().trim().min(20, "Isi minimal 20 karakter."),
+  coverImageUrl: optionalUrl,
+  publicationStatus: z.enum(["draft", "published"]),
+});
+
+export type ArticleInput = z.infer<typeof articleSchema>;

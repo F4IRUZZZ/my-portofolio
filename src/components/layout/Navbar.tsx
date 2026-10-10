@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
+import { useMounted } from "@/lib/use-mounted";
 import { Container } from "@/components/ui/Container";
 import { PrimaryButton } from "@/components/ui/Buttons";
 
@@ -12,11 +13,15 @@ const NAV_LINKS = [
   { href: "/projects", label: "Proyek" },
   { href: "/achievements", label: "Prestasi" },
   { href: "/experience", label: "Pengalaman" },
+  { href: "/articles", label: "Artikel" },
 ];
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  // Tandai link aktif hanya setelah mount agar HTML server dan render
+  // pertama klien identik (hindari hydration mismatch).
+  const activeHref = useMounted() ? pathname : null;
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur">
@@ -37,9 +42,9 @@ export function Navbar() {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  aria-current={pathname === link.href ? "page" : undefined}
+                  aria-current={activeHref === link.href ? "page" : undefined}
                   className={`rounded-control px-3 py-2 text-sm font-medium transition-colors duration-200 ${
-                    pathname === link.href
+                    activeHref === link.href
                       ? "text-foreground"
                       : "text-muted hover:text-foreground"
                   }`}
@@ -80,9 +85,9 @@ export function Navbar() {
                   <Link
                     href={link.href}
                     onClick={() => setOpen(false)}
-                    aria-current={pathname === link.href ? "page" : undefined}
+                    aria-current={activeHref === link.href ? "page" : undefined}
                     className={`block rounded-control px-3 py-2.5 text-sm font-medium transition-colors duration-200 ${
-                      pathname === link.href
+                      activeHref === link.href
                         ? "bg-elevated text-foreground"
                         : "text-muted hover:bg-elevated hover:text-foreground"
                     }`}

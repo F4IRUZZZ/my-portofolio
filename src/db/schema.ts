@@ -148,3 +148,18 @@ export const experiences = pgTable("experiences", {
   sortOrder: integer("sort_order").notNull().default(0),
   ...timestamps,
 });
+
+export const articles = pgTable("articles", {
+  id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+  title: text("title").notNull(),
+  slug: text("slug").notNull().unique(),
+  excerpt: text("excerpt").notNull(),
+  content: text("content").notNull(),
+  coverImageUrl: text("cover_image_url"),
+  publicationStatus: publicationStatusEnum("publication_status")
+    .notNull()
+    .default("draft"),
+  sortOrder: integer("sort_order").notNull().default(0),
+  publishedAt: timestamp("published_at", { withTimezone: true }),
+  ...timestamps,
+});
