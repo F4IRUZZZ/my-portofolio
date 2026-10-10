@@ -1,6 +1,14 @@
+import type { Metadata } from "next";
 import { Container } from "@/components/ui/Container";
-import { EmptyState } from "@/components/ui/EmptyState";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { AchievementCard } from "@/components/ui/AchievementCard";
+import { achievement } from "@/data/portfolio";
+
+export const metadata: Metadata = {
+  title: "Prestasi — Fairuz.dev",
+  description:
+    "Pencapaian terverifikasi Alfairuz Atthariq Satria beserta buktinya bila tersedia.",
+};
 
 export default function AchievementsPage() {
   return (
@@ -12,10 +20,13 @@ export default function AchievementsPage() {
           title="Prestasi"
           description="Pencapaian yang terverifikasi beserta buktinya bila tersedia."
         />
-        <div className="mt-8">
-          <EmptyState
-            title="Data prestasi sedang diverifikasi."
-            description="Prestasi akan ditampilkan setelah tahun dan bukti pendukung dikonfirmasi."
+        <div className="mt-8 grid max-w-xl gap-6">
+          <AchievementCard
+            rank={achievement.rank}
+            title={achievement.title}
+            scope={`${achievement.scope} • ${achievement.location}`}
+            year="2026"
+            description={`${achievement.description} Detail tanggal: lomba ${achievement.competedAt}, pengumuman ${achievement.announcedAt}.`}
           />
         </div>
       </Container>

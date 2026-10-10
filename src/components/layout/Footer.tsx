@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Suspense } from "react";
 import { Container } from "@/components/ui/Container";
+import { profile } from "@/data/portfolio";
 import { CurrentYear } from "./CurrentYear";
 
 const FOOTER_LINKS = [
@@ -26,6 +27,27 @@ export function Footer() {
                 <CurrentYear />
               </Suspense>{" "}
               Alfairuz Atthariq Satria. Student Developer.
+            </p>
+            <p className="mt-2 text-sm text-muted">
+              <a
+                href={profile.githubUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="transition-colors duration-200 hover:text-foreground"
+              >
+                GitHub
+              </a>
+              <span aria-hidden="true" className="mx-2">
+                •
+              </span>
+              <a
+                href={profile.linkedinUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="transition-colors duration-200 hover:text-foreground"
+              >
+                LinkedIn
+              </a>
             </p>
           </div>
           <nav aria-label="Navigasi footer">
