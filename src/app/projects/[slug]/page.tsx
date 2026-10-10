@@ -221,6 +221,7 @@ export default async function ProjectDetailPage({
                     technologies={item.technologies}
                     workStatus={item.workStatus}
                     href={`/projects/${item.slug}`}
+                    period={item.period}
                     cover={
                       item.coverImageUrl ? (
                         // eslint-disable-next-line @next/next/no-img-element

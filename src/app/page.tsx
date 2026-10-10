@@ -94,6 +94,7 @@ export default async function Home() {
                   technologies={project.technologies}
                   workStatus={project.workStatus}
                   href={`/projects/${project.slug}`}
+                  period={project.period}
                   cover={projectCover(project.title, project.coverImageUrl)}
                 />
               </Reveal>
