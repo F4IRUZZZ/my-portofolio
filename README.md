@@ -13,7 +13,13 @@ Bahasa utama konten: Bahasa Indonesia.
 - Auth.js (next-auth v4 stabil) dengan login Google khusus admin (Fase 3)
 - Package manager: npm
 
-Belum dipasang (Fase 4+): Cloudinary untuk media.
+Belum dipasang: Cloudinary untuk media (gambar via URL manual, upload ditunda).
+
+## Batasan keamanan yang diketahui
+
+- Rate limiting khusus di endpoint auth **belum** dipasang. Mitigasi saat
+  ini: throttling bawaan Google + allowlist 1 email + tanpa pendaftaran
+  publik. Jangan klaim sebaliknya.
 
 ## Cara Menjalankan
 
@@ -49,16 +55,33 @@ Drizzle + Neon (satu-satunya database, PRD §15.5). Migrasi SQL di `drizzle/`,
 schema di `src/db/schema.ts`. Build production butuh `DATABASE_URL`
 (env Vercel saat deploy). Jangan commit secret apa pun.
 
-## Deployment
+## Deployment (Vercel)
 
-Rencana: Vercel (aplikasi) + Neon (database) + Cloudinary (media).
-Detail menyusul setelah Fase 3. Jangan commit secret apa pun.
+1. **Import repo** di https://vercel.com/new → pilih
+   `F4IRUZZZ/my-portofolio` (framework terdeteksi Next.js otomatis).
+2. **Environment Variables** (Production + Preview):
+   `DATABASE_URL` (Neon pooled, project yang sama),
+   `AUTH_SECRET` (generate baru, min 32 karakter, beda dari lokal),
+   `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`,
+   `ADMIN_EMAIL`, `NEXT_PUBLIC_SITE_URL` (URL production, mis.
+   `https://fairuz-dev.vercel.app`).
+3. **Google OAuth**: tambah Authorized redirect URI production
+   `https://<domain>/api/auth/callback/google` di OAuth client
+   (Google Cloud Console → Credentials).
+4. **Database**: setelah deploy pertama, jalankan `db:migrate` ke Neon
+   dari lokal (`DATABASE_URL` sudah menunjuk DB yang sama).
+   **Jangan `db:seed`** bila DB sudah berisi konten CMS — seed
+   menghapus dan menulis ulang.
+5. Verifikasi: halaman 200, `/sitemap.xml`, `/robots.txt`, OG image,
+   `/admin` tanpa sesi redirect ke login, login Google end-to-end.
+
+Jangan commit secret apa pun.
 
 ## Status Fase
 
 - [x] Fase 0 — Scaffolding
 - [x] Fase 1 — Design token + komponen reusable
 - [x] Fase 2 — Halaman publik P0
-- [x] Fase 3 — Database + Auth (PR, menunggu review)
-- [ ] Fase 4 — CMS admin
-- [ ] Fase 5 — SEO + hardening + docs akhir
+- [x] Fase 3 — Database + Auth
+- [x] Fase 4 — CMS admin
+- [x] Fase 5 — SEO, hardening, docs, deploy (PR, menunggu review)
