@@ -7,6 +7,7 @@ import { ProjectCard } from "@/components/ui/ProjectCard";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { TechnologyTag } from "@/components/ui/TechnologyTag";
+import { Reveal } from "@/components/ui/Reveal";
 import { getProjectBySlug, getPublishedProjects } from "@/lib/queries";
 
 export async function generateStaticParams() {
@@ -60,7 +61,8 @@ export default async function ProjectDetailPage({
     <>
       <section className="py-12 sm:py-16">
         <Container>
-          <nav aria-label="Breadcrumb">
+          <Reveal>
+            <nav aria-label="Breadcrumb">
             <ol className="flex flex-wrap items-center gap-1.5 text-sm text-muted">
               <li>
                 <Link href="/" className="hover:text-foreground">
@@ -98,7 +100,9 @@ export default async function ProjectDetailPage({
               {project.period ? ` • ${project.period}` : ""}
             </span>
           </div>
+          </Reveal>
 
+          <Reveal delay={80}>
           {project.coverImageUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
@@ -117,7 +121,9 @@ export default async function ProjectDetailPage({
               </span>
             </div>
           )}
+          </Reveal>
 
+          <Reveal delay={120}>
           <div className="mt-10 flex max-w-3xl flex-col gap-8">
             <DetailBlock title="Konteks dan masalah">
               <p>{project.context}</p>
@@ -195,34 +201,38 @@ export default async function ProjectDetailPage({
               </div>
             ) : null}
           </div>
+          </Reveal>
         </Container>
       </section>
 
       {related.length > 0 ? (
         <section aria-labelledby="terkait-heading" className="py-8">
           <Container>
-            <SectionHeading title="Proyek terkait" />
+            <Reveal>
+              <SectionHeading title="Proyek terkait" />
+            </Reveal>
             <div className="mt-6 grid gap-6 md:grid-cols-2">
-              {related.map((item) => (
-                <ProjectCard
-                  key={item.slug}
-                  title={item.title}
-                  summary={item.summary}
-                  category={item.category}
-                  technologies={item.technologies}
-                  workStatus={item.workStatus}
-                  href={`/projects/${item.slug}`}
-                  cover={
-                    item.coverImageUrl ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={item.coverImageUrl}
-                        alt={`Cover ${item.title}`}
-                        className="h-full w-full object-cover"
-                      />
-                    ) : undefined
-                  }
-                />
+              {related.map((item, index) => (
+                <Reveal key={item.slug} delay={index * 80}>
+                  <ProjectCard
+                    title={item.title}
+                    summary={item.summary}
+                    category={item.category}
+                    technologies={item.technologies}
+                    workStatus={item.workStatus}
+                    href={`/projects/${item.slug}`}
+                    cover={
+                      item.coverImageUrl ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={item.coverImageUrl}
+                          alt={`Cover ${item.title}`}
+                          className="h-full w-full object-cover"
+                        />
+                      ) : undefined
+                    }
+                  />
+                </Reveal>
               ))}
             </div>
           </Container>
