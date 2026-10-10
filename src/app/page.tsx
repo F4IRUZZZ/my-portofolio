@@ -1,29 +1,38 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { PrimaryButton, SecondaryButton } from "@/components/ui/Buttons";
 import { Container } from "@/components/ui/Container";
-import { EmptyState } from "@/components/ui/EmptyState";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { AchievementCard } from "@/components/ui/AchievementCard";
+import { ExperienceTimeline } from "@/components/ui/ExperienceTimeline";
+import { ProjectCard } from "@/components/ui/ProjectCard";
+import { achievement, experiences, profile, projects } from "@/data/portfolio";
+
+export const metadata: Metadata = {
+  title: "Fairuz.dev — Student Developer",
+  description:
+    "Portofolio Alfairuz Atthariq Satria: proyek, prestasi LKS AI, pengalaman PKL, dan kontak.",
+};
 
 export default function Home() {
+  const featured = projects.filter((project) => project.isFeatured);
+
   return (
     <>
       <section aria-labelledby="hero-heading" className="py-16 sm:py-24">
         <Container>
           <div className="max-w-2xl">
             <p className="inline-flex items-center rounded-full border border-border bg-surface px-3 py-1 text-xs font-medium text-muted">
-              Student Developer
+              {profile.headline}
             </p>
             <h1
               id="hero-heading"
               className="mt-4 text-4xl font-bold leading-tight tracking-tight text-foreground sm:text-5xl"
             >
-              Saya Fairuz, Student Developer yang membangun solusi digital
-              melalui kode dan desain.
+              {profile.tagline}
             </h1>
             <p className="mt-4 max-w-xl leading-relaxed text-muted">
-              Siswa kelas 12 Rekayasa Perangkat Lunak di SMK Negeri 10
-              Surabaya. Tertarik pada pengembangan web, aplikasi, dan
-              eksplorasi teknologi.
+              {profile.subTagline}
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <PrimaryButton href="/projects">Lihat Proyek</PrimaryButton>
@@ -48,11 +57,80 @@ export default function Home() {
               Lihat semua proyek
             </Link>
           </div>
-          <div className="mt-8">
-            <EmptyState
-              title="Proyek akan ditambahkan di sini."
-              description="Daftar proyek unggulan sedang disiapkan dan akan diverifikasi sebelum dipublikasikan."
+          <div className="mt-8 grid gap-6 md:grid-cols-2">
+            {featured.map((project) => (
+              <ProjectCard
+                key={project.slug}
+                title={project.title}
+                summary={project.summary}
+                category={project.category}
+                technologies={project.technologies}
+                workStatus={project.workStatus}
+                href={`/projects/${project.slug}`}
+              />
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      <section aria-labelledby="prestasi-heading" className="py-8">
+        <Container>
+          <SectionHeading eyebrow="Pencapaian" title="Prestasi Utama" />
+          <div className="mt-8 max-w-xl">
+            <AchievementCard
+              rank={achievement.rank}
+              title={achievement.title}
+              scope={achievement.scope}
+              year="2026"
+              description={achievement.description}
             />
+          </div>
+          <Link
+            href="/achievements"
+            className="mt-6 inline-block text-sm font-medium text-accent hover:text-accent-hover"
+          >
+            Lihat semua prestasi
+          </Link>
+        </Container>
+      </section>
+
+      <section aria-labelledby="pengalaman-heading" className="py-8">
+        <Container>
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <SectionHeading
+              eyebrow="Perjalanan"
+              title="Ringkasan Pengalaman"
+              description="Dua periode PKL dengan kontribusi yang dicatat terpisah dan jujur."
+            />
+            <Link
+              href="/experience"
+              className="text-sm font-medium text-accent hover:text-accent-hover"
+            >
+              Lihat pengalaman lengkap
+            </Link>
+          </div>
+          <div className="mt-8 max-w-3xl">
+            <ExperienceTimeline entries={experiences} />
+          </div>
+        </Container>
+      </section>
+
+      <section aria-labelledby="kontak-heading" className="py-8">
+        <Container>
+          <div className="rounded-card border border-border bg-surface p-8 text-center sm:p-12">
+            <h2
+              id="kontak-heading"
+              className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl"
+            >
+              Tertarik berkolaborasi atau berdiskusi?
+            </h2>
+            <p className="mx-auto mt-3 max-w-md leading-relaxed text-muted">
+              Saya terbuka untuk magang, proyek pembelajaran, dan kolaborasi.
+            </p>
+            <div className="mt-6 flex flex-wrap justify-center gap-3">
+              <PrimaryButton href="/contact">Hubungi Saya</PrimaryButton>
+              <SecondaryButton href="/about">Tentang Saya</SecondaryButton>
+            </div>
           </div>
         </Container>
       </section>

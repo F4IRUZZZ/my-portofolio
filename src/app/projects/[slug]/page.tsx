@@ -1,0 +1,217 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { ChevronRight, ExternalLink } from "lucide-react";
+import { Container } from "@/components/ui/Container";
+import { ProjectCard } from "@/components/ui/ProjectCard";
+import { SectionHeading } from "@/components/ui/SectionHeading";
+import { StatusBadge } from "@/components/ui/StatusBadge";
+import { TechnologyTag } from "@/components/ui/TechnologyTag";
+import { getProject, getRelatedProjects, projects } from "@/data/portfolio";
+
+export function generateStaticParams() {
+  return projects.map((project) => ({ slug: project.slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const project = getProject(slug);
+  if (!project) return { title: "Proyek tidak ditemukan — Fairuz.dev" };
+  return {
+    title: `${project.title} — Fairuz.dev`,
+    description: project.summary,
+  };
+}
+
+function DetailBlock({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div>
+      <h2 className="text-lg font-semibold text-foreground">{title}</h2>
+      <div className="mt-2 text-[15px] leading-relaxed text-muted">
+        {children}
+      </div>
+    </div>
+  );
+}
+
+export default async function ProjectDetailPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const project = getProject(slug);
+  if (!project) notFound();
+  const related = getRelatedProjects(slug);
+
+  return (
+    <>
+      <section className="py-12 sm:py-16">
+        <Container>
+          <nav aria-label="Breadcrumb">
+            <ol className="flex flex-wrap items-center gap-1.5 text-sm text-muted">
+              <li>
+                <Link href="/" className="hover:text-foreground">
+                  Beranda
+                </Link>
+              </li>
+              <li aria-hidden="true">
+                <ChevronRight className="h-4 w-4" />
+              </li>
+              <li>
+                <Link href="/projects" className="hover:text-foreground">
+                  Proyek
+                </Link>
+              </li>
+              <li aria-hidden="true">
+                <ChevronRight className="h-4 w-4" />
+              </li>
+              <li aria-current="page" className="text-foreground">
+                {project.title}
+              </li>
+            </ol>
+          </nav>
+
+          <h1 className="mt-6 max-w-3xl text-3xl font-bold leading-tight tracking-tight text-foreground sm:text-4xl">
+            {project.title}
+          </h1>
+          <p className="mt-3 max-w-2xl leading-relaxed text-muted">
+            {project.summary}
+          </p>
+
+          <div className="mt-5 flex flex-wrap items-center gap-2">
+            <StatusBadge status={project.workStatus} />
+            <span className="text-xs font-medium uppercase tracking-wide text-muted">
+              {project.category} • {project.period}
+            </span>
+          </div>
+
+          <div
+            aria-label="Galeri screenshot"
+            className="mt-8 flex aspect-video w-full flex-col items-center justify-center gap-2 rounded-card border border-dashed border-border bg-surface text-muted"
+          >
+            <span className="text-sm font-medium">Gambar menyusul</span>
+            <span className="max-w-md px-6 text-center text-xs">
+              Screenshot hanya ditampilkan setelah ada izin publikasi.
+            </span>
+          </div>
+
+          <div className="mt-10 flex max-w-3xl flex-col gap-8">
+            <DetailBlock title="Konteks dan masalah">
+              <p>{project.context}</p>
+            </DetailBlock>
+            <DetailBlock title="Peran dan kontribusi pribadi">
+              <p className="font-medium text-foreground">{project.role}</p>
+              <ul className="mt-2 flex list-disc flex-col gap-1.5 pl-5">
+                {project.contributions.map((item) => (
+                  <li key={item.slice(0, 24)}>{item}</li>
+                ))}
+              </ul>
+            </DetailBlock>
+            <DetailBlock title="Fitur yang telah dibuat">
+              <ul className="flex list-disc flex-col gap-1.5 pl-5">
+                {project.features.map((item) => (
+                  <li key={item.slice(0, 24)}>{item}</li>
+                ))}
+              </ul>
+            </DetailBlock>
+            <div>
+              <h2 className="text-lg font-semibold text-foreground">
+                TechStack
+              </h2>
+              <ul className="mt-2 flex flex-wrap gap-2">
+                {project.technologies.map((tech) => (
+                  <li key={tech}>
+                    <TechnologyTag name={tech} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <DetailBlock title="Proses dan keputusan teknis">
+              <ul className="flex list-disc flex-col gap-1.5 pl-5">
+                {project.process.map((item) => (
+                  <li key={item.slice(0, 24)}>{item}</li>
+                ))}
+              </ul>
+            </DetailBlock>
+            <DetailBlock title="Tantangan dan pembelajaran">
+              <p>{project.challenges}</p>
+              <p className="mt-2">{project.learnings}</p>
+            </DetailBlock>
+            <DetailBlock title="Status saat ini dan keterbatasan">
+              <p>{project.currentState}</p>
+            </DetailBlock>
+            {project.repositoryUrl || project.demoUrl ? (
+              <div>
+                <h2 className="text-lg font-semibold text-foreground">
+                  Tautan
+                </h2>
+                <div className="mt-2 flex flex-wrap gap-3">
+                  {project.repositoryUrl ? (
+                    <a
+                      href={project.repositoryUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:text-accent-hover"
+                    >
+                      Repository
+                      <ExternalLink
+                        aria-hidden="true"
+                        className="h-4 w-4"
+                      />
+                    </a>
+                  ) : null}
+                  {project.demoUrl ? (
+                    <a
+                      href={project.demoUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:text-accent-hover"
+                    >
+                      Demo live
+                      <ExternalLink
+                        aria-hidden="true"
+                        className="h-4 w-4"
+                      />
+                    </a>
+                  ) : null}
+                </div>
+              </div>
+            ) : null}
+          </div>
+        </Container>
+      </section>
+
+      {related.length > 0 ? (
+        <section aria-labelledby="terkait-heading" className="py-8">
+          <Container>
+            <SectionHeading title="Proyek terkait" />
+            <div className="mt-6 grid gap-6 md:grid-cols-2">
+              {related.map((item) => (
+                <ProjectCard
+                  key={item.slug}
+                  title={item.title}
+                  summary={item.summary}
+                  category={item.category}
+                  technologies={item.technologies}
+                  workStatus={item.workStatus}
+                  href={`/projects/${item.slug}`}
+                />
+              ))}
+            </div>
+          </Container>
+        </section>
+      ) : null}
+    </>
+  );
+}

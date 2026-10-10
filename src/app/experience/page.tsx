@@ -1,6 +1,14 @@
+import type { Metadata } from "next";
 import { Container } from "@/components/ui/Container";
-import { EmptyState } from "@/components/ui/EmptyState";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { ExperienceTimeline } from "@/components/ui/ExperienceTimeline";
+import { experiences } from "@/data/portfolio";
+
+export const metadata: Metadata = {
+  title: "Pengalaman — Fairuz.dev",
+  description:
+    "Pengalaman PKL Alfairuz Atthariq Satria dengan kontribusi yang dicatat jujur.",
+};
 
 export default function ExperiencePage() {
   return (
@@ -12,11 +20,8 @@ export default function ExperiencePage() {
           title="Pengalaman"
           description="Pengalaman PKL dan kontribusi yang benar-benar dilakukan."
         />
-        <div className="mt-8">
-          <EmptyState
-            title="Linimasa pengalaman menyusul."
-            description="Detail pengalaman PKL akan dilengkapi di Fase 2."
-          />
+        <div className="mt-10 max-w-3xl">
+          <ExperienceTimeline entries={experiences} />
         </div>
       </Container>
     </section>
