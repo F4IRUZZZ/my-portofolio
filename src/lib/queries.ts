@@ -121,6 +121,7 @@ export type PublicProject = {
   currentState: string;
   repositoryUrl: string | null;
   demoUrl: string | null;
+  coverImageUrl: string | null;
 };
 
 async function toPublicProject(
@@ -149,6 +150,7 @@ async function toPublicProject(
     currentState: row.currentState,
     repositoryUrl: row.repositoryUrl,
     demoUrl: row.demoUrl,
+    coverImageUrl: row.coverImageUrl,
   };
 }
 

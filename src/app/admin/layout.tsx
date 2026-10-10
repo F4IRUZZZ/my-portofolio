@@ -2,13 +2,20 @@ import { Suspense } from "react";
 import type { ReactNode } from "react";
 import { connection } from "next/server";
 import { Container } from "@/components/ui/Container";
+import { AdminSidebar } from "@/components/layout/AdminSidebar";
 import { AdminProviders } from "./providers";
 
-// Area admin bergantung pada sesi: sub-pohon ini di-render saat request
-// (streaming), cangkang layout tetap bisa di-prerender.
+// Area admin bergantung pada sesi: render saat request (blocking),
+// bukan prerender. (Pengganti force-dynamic di era cacheComponents.)
+export const instant = false;
 async function AdminDynamic({ children }: { children: ReactNode }) {
   await connection();
-  return <>{children}</>;
+  return (
+    <div className="flex flex-col gap-6 lg:flex-row lg:items-start">
+      <AdminSidebar />
+      <div className="min-w-0 flex-1">{children}</div>
+    </div>
+  );
 }
 
 export default function AdminLayout({ children }: LayoutProps<"/admin">) {

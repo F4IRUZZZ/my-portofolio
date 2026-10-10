@@ -99,15 +99,24 @@ export default async function ProjectDetailPage({
             </span>
           </div>
 
-          <div
-            aria-label="Galeri screenshot"
-            className="mt-8 flex aspect-video w-full flex-col items-center justify-center gap-2 rounded-card border border-dashed border-border bg-surface text-muted"
-          >
-            <span className="text-sm font-medium">Gambar menyusul</span>
-            <span className="max-w-md px-6 text-center text-xs">
-              Screenshot hanya ditampilkan setelah ada izin publikasi.
-            </span>
-          </div>
+          {project.coverImageUrl ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={project.coverImageUrl}
+              alt={`Cover ${project.title}`}
+              className="mt-8 aspect-video w-full rounded-card border border-border object-cover"
+            />
+          ) : (
+            <div
+              aria-label="Galeri screenshot"
+              className="mt-8 flex aspect-video w-full flex-col items-center justify-center gap-2 rounded-card border border-dashed border-border bg-surface text-muted"
+            >
+              <span className="text-sm font-medium">Gambar menyusul</span>
+              <span className="max-w-md px-6 text-center text-xs">
+                Screenshot hanya ditampilkan setelah ada izin publikasi.
+              </span>
+            </div>
+          )}
 
           <div className="mt-10 flex max-w-3xl flex-col gap-8">
             <DetailBlock title="Konteks dan masalah">
@@ -203,6 +212,16 @@ export default async function ProjectDetailPage({
                   technologies={item.technologies}
                   workStatus={item.workStatus}
                   href={`/projects/${item.slug}`}
+                  cover={
+                    item.coverImageUrl ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={item.coverImageUrl}
+                        alt={`Cover ${item.title}`}
+                        className="h-full w-full object-cover"
+                      />
+                    ) : undefined
+                  }
                 />
               ))}
             </div>
