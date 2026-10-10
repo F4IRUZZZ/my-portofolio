@@ -11,10 +11,11 @@ type RevealProps = {
 };
 
 /*
- * Memunculkan konten sekali saat masuk viewport. Render pertama (SSR dan
- * hydration) selalu terlihat sehingga identik di server dan klien;
- * status tersembunyi hanya diterapkan pasca-mount. Tanpa-JS atau observer
- * tak tersedia: konten tetap terlihat.
+ * Memunculkan konten setiap kali masuk viewport (replay dua arah: scroll
+ * ke bawah maupun ke atas). Render pertama (SSR dan hydration) selalu
+ * terlihat sehingga identik di server dan klien; status tersembunyi hanya
+ * diterapkan pasca-mount. Tanpa-JS atau observer tak tersedia: konten
+ * tetap terlihat.
  */
 export function Reveal({ children, delay = 0, className = "" }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -33,10 +34,8 @@ export function Reveal({ children, delay = 0, className = "" }: RevealProps) {
     }
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries.some((entry) => entry.isIntersecting)) {
-          setInView(true);
-          observer.disconnect();
-        }
+        const anyVisible = entries.some((entry) => entry.isIntersecting);
+        setInView((prev) => (prev === anyVisible ? prev : anyVisible));
       },
       { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
     );
