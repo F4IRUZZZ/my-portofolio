@@ -155,17 +155,77 @@ async function toPublicProject(
   };
 }
 
-export async function getPublishedProjects(): Promise<PublicProject[]> {
+export async function getPublishedProjects(
+  filter?: { category?: string; technology?: string },
+): Promise<PublicProject[]> {
   "use cache";
   cacheLife("hours");
   cacheTag("projects");
   const db = getDb();
-  const rows = await db
+  const conditions = [eq(projects.publicationStatus, "published")];
+  if (filter?.category) {
+    conditions.push(eq(projects.category, filter.category));
+  }
+  let rows;
+  if (filter?.technology) {
+    rows = await db
+      .select({ project: projects })
+      .from(projects)
+      .innerJoin(
+        projectTechnologies,
+        eq(projectTechnologies.projectId, projects.id),
+      )
+      .where(
+        and(
+          ...conditions,
+          eq(projectTechnologies.technologyName, filter.technology),
+        ),
+      )
+      .orderBy(asc(projects.sortOrder));
+    const unique = new Map<number, typeof projects.$inferSelect>();
+    for (const row of rows) unique.set(row.project.id, row.project);
+    return Promise.all(
+      [...unique.values()].map((row) => toPublicProject(db, row)),
+    );
+  }
+  rows = await db
     .select()
     .from(projects)
-    .where(eq(projects.publicationStatus, "published"))
+    .where(and(...conditions))
     .orderBy(asc(projects.sortOrder));
   return Promise.all(rows.map((row) => toPublicProject(db, row)));
+}
+
+export type ProjectFilterOptions = {
+  categories: string[];
+  technologies: string[];
+};
+
+export async function getProjectFilterOptions(): Promise<ProjectFilterOptions> {
+  "use cache";
+  cacheLife("hours");
+  cacheTag("projects");
+  const db = getDb();
+  const [cats, techs] = await Promise.all([
+    db
+      .selectDistinct({ name: projects.category })
+      .from(projects)
+      .where(eq(projects.publicationStatus, "published"))
+      .orderBy(asc(projects.category)),
+    db
+      .selectDistinct({ name: projectTechnologies.technologyName })
+      .from(projectTechnologies)
+      .innerJoin(
+        projects,
+        eq(projectTechnologies.projectId, projects.id),
+      )
+      .where(eq(projects.publicationStatus, "published"))
+      .orderBy(asc(projectTechnologies.technologyName)),
+  ]);
+  return {
+    categories: cats.map((c) => c.name),
+    technologies: techs.map((t) => t.name),
+  };
 }
 
 export async function getProjectBySlug(
