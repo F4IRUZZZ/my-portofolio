@@ -77,6 +77,16 @@ export default async function Home() {
                 technologies={project.technologies}
                 workStatus={project.workStatus}
                 href={`/projects/${project.slug}`}
+                cover={
+                  project.coverImageUrl ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={project.coverImageUrl}
+                      alt={`Cover ${project.title}`}
+                      className="h-full w-full object-cover"
+                    />
+                  ) : undefined
+                }
               />
             ))}
           </div>
