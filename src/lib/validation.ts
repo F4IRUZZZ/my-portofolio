@@ -109,6 +109,7 @@ export const experienceSchema = z.object({
         .filter((item) => item.length > 0),
     ),
   relatedProjectSlug: z.string().trim().max(120).optional(),
+  evidenceUrl: optionalUrl,
   publicationStatus: z.enum(["draft", "published"]),
 });
 

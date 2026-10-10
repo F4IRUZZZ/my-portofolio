@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ExternalLink } from "lucide-react";
 import { TechnologyTag } from "./TechnologyTag";
 
 export type ExperienceEntry = {
@@ -10,6 +11,7 @@ export type ExperienceEntry = {
   technologies?: string[];
   relatedProjectHref?: string;
   relatedProjectLabel?: string;
+  evidenceUrl?: string;
 };
 
 type ExperienceTimelineProps = {
@@ -50,13 +52,28 @@ export function ExperienceTimeline({ entries }: ExperienceTimelineProps) {
               ))}
             </ul>
           ) : null}
-          {entry.relatedProjectHref ? (
-            <Link
-              href={entry.relatedProjectHref}
-              className="mt-3 inline-block text-sm font-medium text-accent hover:text-accent-hover"
-            >
-              {entry.relatedProjectLabel ?? "Lihat proyek terkait"}
-            </Link>
+          {entry.relatedProjectHref || entry.evidenceUrl ? (
+            <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2">
+              {entry.relatedProjectHref ? (
+                <Link
+                  href={entry.relatedProjectHref}
+                  className="text-sm font-medium text-accent hover:text-accent-hover"
+                >
+                  {entry.relatedProjectLabel ?? "Lihat proyek terkait"}
+                </Link>
+              ) : null}
+              {entry.evidenceUrl ? (
+                <a
+                  href={entry.evidenceUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:text-accent-hover"
+                >
+                  Lihat bukti
+                  <ExternalLink aria-hidden="true" className="h-4 w-4" />
+                </a>
+              ) : null}
+            </div>
           ) : null}
         </li>
       ))}

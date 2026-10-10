@@ -47,6 +47,7 @@ export async function upsertExperience(
       responsibilities: data.responsibilities,
       technologies: data.technologies,
       relatedProjectSlug: data.relatedProjectSlug || null,
+      evidenceUrl: data.evidenceUrl || null,
       publicationStatus: data.publicationStatus,
       updatedAt: new Date(),
     };

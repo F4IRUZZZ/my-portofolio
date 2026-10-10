@@ -31,6 +31,8 @@ export default async function AchievementsPage() {
               scope={achievement.scope}
               year={achievement.year}
               description={`${achievement.description} ${achievement.detail}`}
+              evidenceUrl={achievement.evidenceUrl}
+              evidenceLabel="Lihat piagam"
             />
           ) : (
             <EmptyState title="Belum ada prestasi yang dipublikasikan." />
