@@ -73,25 +73,18 @@ body {
 
 /*
  * Reveal saat scroll: fade + naik ringan. Digerakkan oleh komponen
- * `Reveal` (IntersectionObserver). Tanpa-JS: konten tidak pernah
- * disembunyikan (kelas awal tetap terlihat).
+ * `Reveal` (IntersectionObserver). Status tersembunyi hanya diterapkan
+ * pasca-mount agar SSR dan hydration identik; tanpa-JS tetap terlihat.
  */
 .reveal {
   opacity: 1;
   transform: none;
-}
-
-.js .reveal {
-  opacity: 0;
-  transform: translateY(20px);
   transition:
     opacity 500ms ease-out,
     transform 500ms ease-out;
-  will-change: opacity, transform;
 }
 
-.js .reveal-visible {
-  opacity: 1;
-  transform: none;
-  will-change: auto;
+.reveal-hidden {
+  opacity: 0;
+  transform: translateY(20px);
 }
