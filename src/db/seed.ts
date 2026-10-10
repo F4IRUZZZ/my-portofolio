@@ -32,10 +32,10 @@ async function main() {
   await db.insert(profiles).values({
     fullName: "Alfairuz Atthariq Satria",
     headline: "Student Developer",
-    bio: [
-      "Saya Alfairuz Atthariq Satria, siswa kelas 12 jurusan Rekayasa Perangkat Lunak di SMK Negeri 10 Surabaya yang sedang membangun rekam jejak sebagai developer.",
-      "Saya mempelajari PHP, CSS, dan JavaScript dasar, CRUD dengan PHP, UI/UX dengan Figma, ERD dengan draw.io, serta aplikasi desktop Python dengan CustomTkinter. Saat ini saya mengembangkan kemampuan web modern melalui proyek PKL menggunakan Next.js, React, dan Tailwind CSS.",
-    ],
+      bio: [
+        "Saya Alfairuz Atthariq Satria, siswa kelas 12 jurusan Rekayasa Perangkat Lunak di SMK Negeri 10 Surabaya yang sedang membangun rekam jejak sebagai developer.",
+        "Saya mempelajari PHP, CSS, dan JavaScript dasar, CRUD dengan PHP, UI/UX dengan Figma, ERD dengan draw.io, serta aplikasi desktop Python dengan CustomTkinter. Saya juga sempat mempelajari Qt Designer. Saat ini saya mengembangkan kemampuan web modern melalui proyek PKL menggunakan Next.js, React, dan Tailwind CSS.",
+      ],
     education:
       "SMK Negeri 10 Surabaya — Rekayasa Perangkat Lunak (kelas 12)",
     publicEmail: "alafairuzatthariqs@gmail.com",
@@ -185,6 +185,22 @@ async function main() {
         relatedProjectSlug: "website-cms-konsultasi",
         publicationStatus: "published",
         sortOrder: 2,
+      },
+      {
+        organization: "Lepas (Freelance)",
+        role: "Desain UI/UX Aplikasi Desktop",
+        startDate: null,
+        endDate: null,
+        summary:
+          "Mengerjakan 7 desain antarmuka aplikasi desktop dengan Figma saat kelas 11 (6 pesanan rekan dan 1 tugas sendiri). Desain diteruskan untuk diimplementasikan dengan Python oleh pihak lain.",
+        responsibilities: [
+          "Merancang alur dan tampilan aplikasi desktop di Figma untuk kebutuhan tugas rekan dan sendiri.",
+          "Menyerahkan hasil desain untuk diimplementasikan dengan Python (Tkinter/CustomTkinter) oleh pihak lain — tanpa klaim implementasi.",
+        ],
+        technologies: ["Figma"],
+        relatedProjectSlug: null,
+        publicationStatus: "published",
+        sortOrder: 3,
       },
     ]);
 
