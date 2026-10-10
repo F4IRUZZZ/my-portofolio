@@ -5,6 +5,7 @@ import { getProfile } from "@/lib/queries";
 import { CurrentYear } from "./CurrentYear";
 
 const FOOTER_LINKS = [
+  { href: "/", label: "Beranda" },
   { href: "/about", label: "Tentang" },
   { href: "/projects", label: "Proyek" },
   { href: "/achievements", label: "Prestasi" },
