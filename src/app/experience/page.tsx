@@ -3,6 +3,7 @@ import { Container } from "@/components/ui/Container";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ExperienceTimeline } from "@/components/ui/ExperienceTimeline";
+import { Reveal } from "@/components/ui/Reveal";
 import { getExperiences } from "@/lib/queries";
 
 export const metadata: Metadata = {
@@ -17,18 +18,22 @@ export default async function ExperiencePage() {
   return (
     <section className="py-16 sm:py-20">
       <Container>
-        <SectionHeading
-          level={1}
-          eyebrow="Perjalanan"
-          title="Pengalaman"
-          description="Pengalaman PKL dan kontribusi yang benar-benar dilakukan."
-        />
+        <Reveal>
+          <SectionHeading
+            level={1}
+            eyebrow="Perjalanan"
+            title="Pengalaman"
+            description="Pengalaman PKL dan kontribusi yang benar-benar dilakukan."
+          />
+        </Reveal>
         <div className="mt-10 max-w-3xl">
-          {experiences.length > 0 ? (
-            <ExperienceTimeline entries={experiences} />
-          ) : (
-            <EmptyState title="Belum ada pengalaman yang dipublikasikan." />
-          )}
+          <Reveal>
+            {experiences.length > 0 ? (
+              <ExperienceTimeline entries={experiences} />
+            ) : (
+              <EmptyState title="Belum ada pengalaman yang dipublikasikan." />
+            )}
+          </Reveal>
         </div>
       </Container>
     </section>

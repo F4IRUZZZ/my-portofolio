@@ -6,6 +6,7 @@ import { ChevronRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { LoadingSkeleton } from "@/components/ui/LoadingSkeleton";
 import { Markdown } from "@/components/ui/Markdown";
+import { Reveal } from "@/components/ui/Reveal";
 import { getArticleBySlug } from "@/lib/queries";
 
 // Tanpa generateStaticParams (tabel bisa kosong): akses `params` yang
@@ -38,7 +39,8 @@ async function ArticleContent({
 
   return (
     <>
-      <nav aria-label="Breadcrumb">
+      <Reveal>
+        <nav aria-label="Breadcrumb">
         <ol className="flex flex-wrap items-center gap-1.5 text-sm text-muted">
           <li>
             <Link href="/" className="hover:text-foreground">
@@ -61,26 +63,33 @@ async function ArticleContent({
           </li>
         </ol>
       </nav>
+      </Reveal>
 
-      <h1 className="mt-6 text-3xl font-bold leading-tight tracking-tight text-foreground sm:text-4xl">
-        {article.title}
-      </h1>
-      {article.publishedLabel ? (
-        <p className="mt-3 text-sm text-muted">{article.publishedLabel}</p>
-      ) : null}
-      <p className="mt-3 leading-relaxed text-muted">{article.excerpt}</p>
+      <Reveal delay={60}>
+        <h1 className="mt-6 text-3xl font-bold leading-tight tracking-tight text-foreground sm:text-4xl">
+          {article.title}
+        </h1>
+        {article.publishedLabel ? (
+          <p className="mt-3 text-sm text-muted">{article.publishedLabel}</p>
+        ) : null}
+        <p className="mt-3 leading-relaxed text-muted">{article.excerpt}</p>
+      </Reveal>
 
       {article.coverImageUrl ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={article.coverImageUrl}
-          alt={`Cover ${article.title}`}
-          className="mt-8 aspect-video w-full rounded-card border border-border object-cover"
-        />
+        <Reveal delay={100}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={article.coverImageUrl}
+            alt={`Cover ${article.title}`}
+            className="mt-8 aspect-video w-full rounded-card border border-border object-cover"
+          />
+        </Reveal>
       ) : null}
 
       <div className="mt-8">
-        <Markdown content={article.content} />
+        <Reveal delay={120}>
+          <Markdown content={article.content} />
+        </Reveal>
       </div>
     </>
   );

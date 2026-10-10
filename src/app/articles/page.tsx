@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { Reveal } from "@/components/ui/Reveal";
 import { getPublishedArticles } from "@/lib/queries";
 
 export const metadata: Metadata = {
@@ -17,23 +18,25 @@ export default async function ArticlesPage() {
   return (
     <section className="py-16 sm:py-20">
       <Container>
-        <SectionHeading
-          level={1}
-          eyebrow="Catatan"
-          title="Artikel"
-          description="Pembelajaran dan dokumentasi yang ditulis selama berproses."
-        />
+        <Reveal>
+          <SectionHeading
+            level={1}
+            eyebrow="Catatan"
+            title="Artikel"
+            description="Pembelajaran dan dokumentasi yang ditulis selama berproses."
+          />
+        </Reveal>
         {articles.length === 0 ? (
           <div className="mt-8">
-            <EmptyState title="Belum ada artikel yang dipublikasikan." />
+            <Reveal>
+              <EmptyState title="Belum ada artikel yang dipublikasikan." />
+            </Reveal>
           </div>
         ) : (
           <div className="mt-8 grid gap-6 md:grid-cols-2">
-            {articles.map((article) => (
-              <article
-                key={article.slug}
-                className="flex h-full flex-col gap-3 rounded-card border border-border bg-surface p-5 transition-colors duration-200 hover:bg-elevated sm:p-6"
-              >
+            {articles.map((article, index) => (
+              <Reveal key={article.slug} delay={index * 80}>
+                <article className="flex h-full flex-col gap-3 rounded-card border border-border bg-surface p-5 transition-colors duration-200 hover:bg-elevated sm:p-6">
                 <p className="text-xs text-muted">{article.publishedLabel}</p>
                 <h2 className="text-lg font-semibold leading-snug text-foreground">
                   <Link
@@ -55,6 +58,7 @@ export default async function ArticlesPage() {
                   </Link>
                 </div>
               </article>
+            </Reveal>
             ))}
           </div>
         )}

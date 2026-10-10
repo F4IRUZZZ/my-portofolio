@@ -3,6 +3,7 @@ import { ExternalLink, Mail } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { CopyEmailButton } from "@/components/CopyEmailButton";
+import { Reveal } from "@/components/ui/Reveal";
 import { getProfile } from "@/lib/queries";
 
 export const metadata: Metadata = {
@@ -20,13 +21,16 @@ export default async function ContactPage() {
   return (
     <section className="py-16 sm:py-20">
       <Container>
-        <SectionHeading
-          level={1}
-          eyebrow="Kontak"
-          title="Hubungi Saya"
-          description="Email publik dan tautan profesional yang sudah diverifikasi."
-        />
+        <Reveal>
+          <SectionHeading
+            level={1}
+            eyebrow="Kontak"
+            title="Hubungi Saya"
+            description="Email publik dan tautan profesional yang sudah diverifikasi."
+          />
+        </Reveal>
         <div className="mt-8 max-w-xl rounded-card border border-border bg-surface p-5 sm:p-6">
+          <Reveal>
           <div className="flex items-center gap-3">
             <span
               aria-hidden="true"
@@ -69,6 +73,7 @@ export default async function ContactPage() {
               </ul>
             </div>
           ) : null}
+          </Reveal>
         </div>
       </Container>
     </section>
