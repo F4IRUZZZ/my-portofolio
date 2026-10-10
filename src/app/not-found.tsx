@@ -1,5 +1,13 @@
+import type { Metadata } from "next";
 import { Container } from "@/components/ui/Container";
 import { PrimaryButton } from "@/components/ui/Buttons";
+
+// Halaman ini juga ter-render untuk slug asing pada route dinamis yang
+// status HTTP-nya tetap 200 (batasan streaming Cache Components, lihat
+// PR #16). noindex memastikan mesin pencari membuang URL semacam itu.
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+};
 
 export default function NotFound() {
   return (
