@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
+import { Suspense } from "react";
 import "./globals.css";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
@@ -34,6 +35,29 @@ export const metadata: Metadata = {
   },
 };
 
+/*
+ * Navbar memakai usePathname (dinamis): dibungkus Suspense agar cangkang
+ * route dinamis tetap bisa di-prerender. Fallback setinggi navbar (h-16)
+ * agar tidak ada lompatan layout saat streaming.
+ */
+function NavbarShell() {
+  return (
+    <Suspense
+      fallback={
+        <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur">
+          <div className="mx-auto flex h-16 w-full max-w-6xl items-center px-4 sm:px-6 lg:px-8">
+            <span className="text-lg font-bold tracking-tight text-foreground">
+              Fairuz<span className="text-accent">.dev</span>
+            </span>
+          </div>
+        </header>
+      }
+    >
+      <Navbar />
+    </Suspense>
+  );
+}
+
 export default function RootLayout({
   children,
 }: LayoutProps<"/">) {
@@ -46,7 +70,7 @@ export default function RootLayout({
         >
           Lewati ke konten utama
         </a>
-        <Navbar />
+        <NavbarShell />
         <div id="konten">{children}</div>
         <Footer />
       </body>
