@@ -43,3 +43,6 @@ next-env.d.ts
 
 # opencode local tooling
 .opencode/
+
+# playwright local artifacts
+.playwright-mcp/

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { X } from "lucide-react";
+import { ImageIcon, X } from "lucide-react";
 import { useEffect, useRef, type ReactNode } from "react";
 import { StatusBadge, type WorkStatus } from "./StatusBadge";
 import { TechnologyTag } from "./TechnologyTag";
@@ -92,7 +92,15 @@ export function ProjectModal({
           <div className="relative aspect-video w-full overflow-hidden bg-elevated">
             {cover}
           </div>
-        ) : null}
+        ) : (
+          <div
+            aria-hidden="true"
+            className="flex aspect-video w-full flex-col items-center justify-center gap-2 bg-elevated text-muted"
+          >
+            <ImageIcon className="h-8 w-8" strokeWidth={1.5} />
+            <span className="text-xs">Gambar menyusul</span>
+          </div>
+        )}
         <div className="flex flex-col gap-3 p-5 sm:p-6">
           <div className="flex flex-wrap items-center gap-2">
             <span className="text-xs font-medium uppercase tracking-wide text-muted">
