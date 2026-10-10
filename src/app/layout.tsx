@@ -3,16 +3,35 @@ import { Geist } from "next/font/google";
 import "./globals.css";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import { getSiteUrl } from "@/lib/site";
 
 const geist = Geist({
   subsets: ["latin"],
   display: "swap",
 });
 
+const siteUrl = getSiteUrl();
+const siteName = "Fairuz.dev";
+const defaultDescription =
+  "Portofolio Alfairuz Atthariq Satria, Student Developer RPL SMKN 10 Surabaya.";
+
 export const metadata: Metadata = {
-  title: "Fairuz.dev — Student Developer",
-  description:
-    "Portofolio Alfairuz Atthariq Satria, Student Developer RPL SMKN 10 Surabaya.",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Fairuz.dev — Student Developer",
+    template: "%s",
+  },
+  description: defaultDescription,
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    siteName,
+    locale: "id_ID",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 export default function RootLayout({
