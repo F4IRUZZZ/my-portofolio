@@ -6,7 +6,12 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { AchievementCard } from "@/components/ui/AchievementCard";
 import { ExperienceTimeline } from "@/components/ui/ExperienceTimeline";
 import { ProjectCard } from "@/components/ui/ProjectCard";
-import { achievement, experiences, profile, projects } from "@/data/portfolio";
+import {
+  getAchievement,
+  getExperiences,
+  getProfile,
+  getPublishedProjects,
+} from "@/lib/queries";
 
 export const metadata: Metadata = {
   title: "Fairuz.dev — Student Developer",
@@ -14,8 +19,13 @@ export const metadata: Metadata = {
     "Portofolio Alfairuz Atthariq Satria: proyek, prestasi LKS AI, pengalaman PKL, dan kontak.",
 };
 
-export default function Home() {
-  const featured = projects.filter((project) => project.isFeatured);
+export default async function Home() {
+  const [profile, featured, achievement, experiences] = await Promise.all([
+    getProfile(),
+    getPublishedProjects(),
+    getAchievement(),
+    getExperiences(),
+  ]);
 
   return (
     <>
@@ -73,26 +83,28 @@ export default function Home() {
         </Container>
       </section>
 
-      <section aria-labelledby="prestasi-heading" className="py-8">
-        <Container>
-          <SectionHeading eyebrow="Pencapaian" title="Prestasi Utama" />
-          <div className="mt-8 max-w-xl">
-            <AchievementCard
-              rank={achievement.rank}
-              title={achievement.title}
-              scope={achievement.scope}
-              year="2026"
-              description={achievement.description}
-            />
-          </div>
-          <Link
-            href="/achievements"
-            className="mt-6 inline-block text-sm font-medium text-accent hover:text-accent-hover"
-          >
-            Lihat semua prestasi
-          </Link>
-        </Container>
-      </section>
+      {achievement ? (
+        <section aria-labelledby="prestasi-heading" className="py-8">
+          <Container>
+            <SectionHeading eyebrow="Pencapaian" title="Prestasi Utama" />
+            <div className="mt-8 max-w-xl">
+              <AchievementCard
+                rank={achievement.rank}
+                title={achievement.title}
+                scope={achievement.scope}
+                year={achievement.year}
+                description={achievement.description}
+              />
+            </div>
+            <Link
+              href="/achievements"
+              className="mt-6 inline-block text-sm font-medium text-accent hover:text-accent-hover"
+            >
+              Lihat semua prestasi
+            </Link>
+          </Container>
+        </section>
+      ) : null}
 
       <section aria-labelledby="pengalaman-heading" className="py-8">
         <Container>

@@ -17,9 +17,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: {
-  children: React.ReactNode;
-}) {
+}: LayoutProps<"/">) {
   return (
     <html lang="id" className={geist.className}>
       <body className="min-h-screen bg-background text-foreground antialiased">

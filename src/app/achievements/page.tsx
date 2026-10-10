@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Container } from "@/components/ui/Container";
+import { EmptyState } from "@/components/ui/EmptyState";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { AchievementCard } from "@/components/ui/AchievementCard";
-import { achievement } from "@/data/portfolio";
+import { getAchievement } from "@/lib/queries";
 
 export const metadata: Metadata = {
   title: "Prestasi — Fairuz.dev",
@@ -10,7 +11,9 @@ export const metadata: Metadata = {
     "Pencapaian terverifikasi Alfairuz Atthariq Satria beserta buktinya bila tersedia.",
 };
 
-export default function AchievementsPage() {
+export default async function AchievementsPage() {
+  const achievement = await getAchievement();
+
   return (
     <section className="py-16 sm:py-20">
       <Container>
@@ -21,13 +24,17 @@ export default function AchievementsPage() {
           description="Pencapaian yang terverifikasi beserta buktinya bila tersedia."
         />
         <div className="mt-8 grid max-w-xl gap-6">
-          <AchievementCard
-            rank={achievement.rank}
-            title={achievement.title}
-            scope={`${achievement.scope} • ${achievement.location}`}
-            year="2026"
-            description={`${achievement.description} Detail tanggal: lomba ${achievement.competedAt}, pengumuman ${achievement.announcedAt}.`}
-          />
+          {achievement ? (
+            <AchievementCard
+              rank={achievement.rank}
+              title={achievement.title}
+              scope={achievement.scope}
+              year={achievement.year}
+              description={`${achievement.description} ${achievement.detail}`}
+            />
+          ) : (
+            <EmptyState title="Belum ada prestasi yang dipublikasikan." />
+          )}
         </div>
       </Container>
     </section>

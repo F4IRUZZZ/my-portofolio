@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Suspense } from "react";
 import { Container } from "@/components/ui/Container";
-import { profile } from "@/data/portfolio";
+import { getProfile } from "@/lib/queries";
 import { CurrentYear } from "./CurrentYear";
 
 const FOOTER_LINKS = [
@@ -12,7 +12,9 @@ const FOOTER_LINKS = [
   { href: "/contact", label: "Kontak" },
 ];
 
-export function Footer() {
+export async function Footer() {
+  const profile = await getProfile();
+
   return (
     <footer className="mt-20 border-t border-border">
       <Container>
@@ -28,27 +30,35 @@ export function Footer() {
               </Suspense>{" "}
               Alfairuz Atthariq Satria. Student Developer.
             </p>
-            <p className="mt-2 text-sm text-muted">
-              <a
-                href={profile.githubUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="transition-colors duration-200 hover:text-foreground"
-              >
-                GitHub
-              </a>
-              <span aria-hidden="true" className="mx-2">
-                •
-              </span>
-              <a
-                href={profile.linkedinUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="transition-colors duration-200 hover:text-foreground"
-              >
-                LinkedIn
-              </a>
-            </p>
+            {profile.githubUrl || profile.linkedinUrl ? (
+              <p className="mt-2 text-sm text-muted">
+                {profile.githubUrl ? (
+                  <a
+                    href={profile.githubUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="transition-colors duration-200 hover:text-foreground"
+                  >
+                    GitHub
+                  </a>
+                ) : null}
+                {profile.githubUrl && profile.linkedinUrl ? (
+                  <span aria-hidden="true" className="mx-2">
+                    •
+                  </span>
+                ) : null}
+                {profile.linkedinUrl ? (
+                  <a
+                    href={profile.linkedinUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="transition-colors duration-200 hover:text-foreground"
+                  >
+                    LinkedIn
+                  </a>
+                ) : null}
+              </p>
+            ) : null}
           </div>
           <nav aria-label="Navigasi footer">
             <ul className="flex flex-wrap gap-x-5 gap-y-2">

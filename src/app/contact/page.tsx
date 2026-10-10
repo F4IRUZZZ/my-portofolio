@@ -3,15 +3,20 @@ import { ExternalLink, Mail } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { CopyEmailButton } from "@/components/CopyEmailButton";
-import { profile } from "@/data/portfolio";
+import { getProfile } from "@/lib/queries";
 
 export const metadata: Metadata = {
   title: "Kontak — Fairuz.dev",
-  description:
-    "Email publik dan tautan profesional Alfairuz Atthariq Satria.",
+  description: "Email publik dan tautan profesional Alfairuz Atthariq Satria.",
 };
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const profile = await getProfile();
+  const links = [
+    { href: profile.githubUrl, label: "GitHub" },
+    { href: profile.linkedinUrl, label: "LinkedIn" },
+  ].filter((link) => link.href !== "");
+
   return (
     <section className="py-16 sm:py-20">
       <Container>
@@ -42,32 +47,28 @@ export default function ContactPage() {
               <CopyEmailButton email={profile.publicEmail} />
             </div>
           </div>
-          <div className="mt-6 border-t border-border pt-6">
-            <p className="text-sm font-medium text-foreground">
-              Tautan profesional
-            </p>
-            <ul className="mt-3 flex flex-col gap-2">
-              {[
-                { href: profile.githubUrl, label: "GitHub" },
-                { href: profile.linkedinUrl, label: "LinkedIn" },
-              ].map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:text-accent-hover"
-                  >
-                    {link.label}
-                    <ExternalLink
-                      aria-hidden="true"
-                      className="h-4 w-4"
-                    />
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {links.length > 0 ? (
+            <div className="mt-6 border-t border-border pt-6">
+              <p className="text-sm font-medium text-foreground">
+                Tautan profesional
+              </p>
+              <ul className="mt-3 flex flex-col gap-2">
+                {links.map((link) => (
+                  <li key={link.label}>
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:text-accent-hover"
+                    >
+                      {link.label}
+                      <ExternalLink aria-hidden="true" className="h-4 w-4" />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
         </div>
       </Container>
     </section>

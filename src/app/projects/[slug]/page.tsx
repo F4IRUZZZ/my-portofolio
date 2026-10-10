@@ -7,9 +7,10 @@ import { ProjectCard } from "@/components/ui/ProjectCard";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { TechnologyTag } from "@/components/ui/TechnologyTag";
-import { getProject, getRelatedProjects, projects } from "@/data/portfolio";
+import { getProjectBySlug, getPublishedProjects } from "@/lib/queries";
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const projects = await getPublishedProjects();
   return projects.map((project) => ({ slug: project.slug }));
 }
 
@@ -19,7 +20,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const project = getProject(slug);
+  const project = await getProjectBySlug(slug);
   if (!project) return { title: "Proyek tidak ditemukan — Fairuz.dev" };
   return {
     title: `${project.title} — Fairuz.dev`,
@@ -50,9 +51,10 @@ export default async function ProjectDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const project = getProject(slug);
+  const project = await getProjectBySlug(slug);
   if (!project) notFound();
-  const related = getRelatedProjects(slug);
+  const published = await getPublishedProjects();
+  const related = published.filter((item) => item.slug !== slug);
 
   return (
     <>
@@ -92,7 +94,8 @@ export default async function ProjectDetailPage({
           <div className="mt-5 flex flex-wrap items-center gap-2">
             <StatusBadge status={project.workStatus} />
             <span className="text-xs font-medium uppercase tracking-wide text-muted">
-              {project.category} • {project.period}
+              {project.category}
+              {project.period ? ` • ${project.period}` : ""}
             </span>
           </div>
 
@@ -165,10 +168,7 @@ export default async function ProjectDetailPage({
                       className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:text-accent-hover"
                     >
                       Repository
-                      <ExternalLink
-                        aria-hidden="true"
-                        className="h-4 w-4"
-                      />
+                      <ExternalLink aria-hidden="true" className="h-4 w-4" />
                     </a>
                   ) : null}
                   {project.demoUrl ? (
@@ -179,10 +179,7 @@ export default async function ProjectDetailPage({
                       className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:text-accent-hover"
                     >
                       Demo live
-                      <ExternalLink
-                        aria-hidden="true"
-                        className="h-4 w-4"
-                      />
+                      <ExternalLink aria-hidden="true" className="h-4 w-4" />
                     </a>
                   ) : null}
                 </div>

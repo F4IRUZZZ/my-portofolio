@@ -3,7 +3,7 @@ import { PrimaryButton, SecondaryButton } from "@/components/ui/Buttons";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { TechnologyTag } from "@/components/ui/TechnologyTag";
-import { profile, techStacks } from "@/data/portfolio";
+import { getProfile, interests, techStacks } from "@/lib/queries";
 
 export const metadata: Metadata = {
   title: "Tentang Saya — Fairuz.dev",
@@ -11,16 +11,14 @@ export const metadata: Metadata = {
     "Bio, pendidikan, perjalanan belajar, dan TechStack Alfairuz Atthariq Satria.",
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const profile = await getProfile();
+
   return (
     <>
       <section className="py-16 sm:py-20">
         <Container>
-          <SectionHeading
-            level={1}
-            eyebrow="Profil"
-            title="Tentang Saya"
-          />
+          <SectionHeading level={1} eyebrow="Profil" title="Tentang Saya" />
           <div className="mt-6 flex max-w-3xl flex-col gap-4 leading-relaxed text-muted">
             {profile.bio.map((paragraph) => (
               <p key={paragraph.slice(0, 24)}>{paragraph}</p>
@@ -42,7 +40,7 @@ export default function AboutPage() {
         <Container>
           <SectionHeading eyebrow="Fokus" title="Area Minat" />
           <ul className="mt-4 flex max-w-3xl flex-wrap gap-2">
-            {profile.interests.map((interest) => (
+            {interests.map((interest) => (
               <li key={interest}>
                 <TechnologyTag name={interest} />
               </li>
