@@ -7,6 +7,7 @@ import {
   Briefcase,
   LayoutDashboard,
   Menu,
+  Newspaper,
   Settings,
   User,
   X,
@@ -18,6 +19,7 @@ const ADMIN_LINKS = [
   { href: "/admin/projects", label: "Proyek", Icon: Briefcase },
   { href: "/admin/achievements", label: "Prestasi", Icon: Award },
   { href: "/admin/experience", label: "Pengalaman", Icon: Briefcase },
+  { href: "/admin/articles", label: "Artikel", Icon: Newspaper },
   { href: "/admin/profile", label: "Profil", Icon: User },
   { href: "/admin/settings", label: "Pengaturan", Icon: Settings },
 ];

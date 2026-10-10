@@ -8,6 +8,7 @@ import { getAuthOptions } from "./auth";
 import { getDb } from "@/db";
 import {
   achievements,
+  articles,
   experiences,
   profiles,
   projectTechnologies,
@@ -28,12 +29,14 @@ export type AdminCounts = {
   achievementsPublished: number;
   achievementsDraft: number;
   experiencesCount: number;
+  articlesPublished: number;
+  articlesDraft: number;
 };
 
 export async function getAdminCounts(): Promise<AdminCounts> {
   await requireAdmin();
   const db = getDb();
-  const [p, a, e] = await Promise.all([
+  const [p, a, e, ar] = await Promise.all([
     db
       .select({
         status: projects.publicationStatus,
@@ -51,6 +54,13 @@ export async function getAdminCounts(): Promise<AdminCounts> {
     db
       .select({ count: sql<number>`count(*)::int` })
       .from(experiences),
+    db
+      .select({
+        status: articles.publicationStatus,
+        count: sql<number>`count(*)::int`,
+      })
+      .from(articles)
+      .groupBy(articles.publicationStatus),
   ]);
   const find = (rows: { status: string; count: number }[], status: string) =>
     rows.find((row) => row.status === status)?.count ?? 0;
@@ -60,6 +70,8 @@ export async function getAdminCounts(): Promise<AdminCounts> {
     achievementsPublished: find(a, "published"),
     achievementsDraft: find(a, "draft"),
     experiencesCount: e[0]?.count ?? 0,
+    articlesPublished: find(ar, "published"),
+    articlesDraft: find(ar, "draft"),
   };
 }
 
@@ -199,4 +211,28 @@ export async function getRecentActivity(): Promise<
   ]
     .sort((x, y) => y.updatedAt.getTime() - x.updatedAt.getTime())
     .slice(0, 5);
+}
+
+export type AdminArticleRow = typeof articles.$inferSelect;
+
+export async function getAdminArticles(): Promise<AdminArticleRow[]> {
+  await requireAdmin();
+  const db = getDb();
+  return db
+    .select()
+    .from(articles)
+    .orderBy(asc(articles.sortOrder), desc(articles.updatedAt));
+}
+
+export async function getAdminArticle(
+  id: number,
+): Promise<AdminArticleRow | null> {
+  await requireAdmin();
+  const db = getDb();
+  const rows = await db
+    .select()
+    .from(articles)
+    .where(eq(articles.id, id))
+    .limit(1);
+  return rows[0] ?? null;
 }

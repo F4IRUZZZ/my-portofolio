@@ -3,11 +3,12 @@
  * Draft tidak memiliki jalur ke halaman publik. CMS (Fase 4) memakai
  * query terpisah dengan proteksi sesi.
  */
-import { and, asc, eq } from "drizzle-orm";
+import { and, asc, desc, eq } from "drizzle-orm";
 import { cacheLife, cacheTag } from "next/cache";
 import { getDb } from "@/db";
 import {
   achievements,
+  articles,
   experiences,
   profiles,
   projectTechnologies,
@@ -263,4 +264,61 @@ export async function getExperiences(): Promise<PublicExperience[]> {
       : undefined,
     evidenceUrl: row.evidenceUrl ?? undefined,
   }));
+}
+
+export type PublicArticle = {
+  slug: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  coverImageUrl: string | null;
+  publishedLabel: string;
+};
+
+function toPublicArticle(row: typeof articles.$inferSelect): PublicArticle {
+  return {
+    slug: row.slug,
+    title: row.title,
+    excerpt: row.excerpt,
+    content: row.content,
+    coverImageUrl: row.coverImageUrl,
+    publishedLabel: row.publishedAt
+      ? formatDateId(row.publishedAt.toISOString().slice(0, 10))
+      : "",
+  };
+}
+
+export async function getPublishedArticles(): Promise<PublicArticle[]> {
+  "use cache";
+  cacheLife("hours");
+  cacheTag("articles");
+  const db = getDb();
+  const rows = await db
+    .select()
+    .from(articles)
+    .where(eq(articles.publicationStatus, "published"))
+    .orderBy(asc(articles.sortOrder), desc(articles.publishedAt));
+  return rows.map(toPublicArticle);
+}
+
+export async function getArticleBySlug(
+  slug: string,
+): Promise<PublicArticle | undefined> {
+  "use cache";
+  cacheLife("hours");
+  cacheTag("articles");
+  const db = getDb();
+  const rows = await db
+    .select()
+    .from(articles)
+    .where(
+      and(
+        eq(articles.slug, slug),
+        eq(articles.publicationStatus, "published"),
+      ),
+    )
+    .limit(1);
+  const row = rows[0];
+  if (!row) return undefined;
+  return toPublicArticle(row);
 }
