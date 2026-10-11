@@ -317,10 +317,14 @@ menu di UI.
 ### NFR-03. Performa
 
 -   Gunakan optimasi gambar Next.js sesuai layanan storage.
--   Hindari animasi berat dan dependensi yang tidak dibutuhkan.
+-   Hindari animasi berat dan dependensi yang tidak dibutuhkan, kecuali
+    lapisan visual Obsidian Forge yang disetujui dalam Amandemen Redesign.
 -   Target Lighthouse awal: Performance, Accessibility, Best Practices,
     dan SEO diupayakan mencapai 90+ pada halaman representatif, tanpa
     menjadikan skor sebagai pengganti pengujian pengguna.
+-   Pengecualian Redesign: lapisan WebGL dekoratif boleh menurunkan skor
+    Performance sintetis selama konten tetap cepat, terukur, dan memiliki
+    fallback non-WebGL; hasil aktual harus dilaporkan, bukan diklaim.
 
 ### NFR-04. Keamanan
 
@@ -352,7 +356,21 @@ menu di UI.
 -   **Framework:** Next.js dengan App Router.
 -   **UI:** React.
 -   **Styling:** Tailwind CSS.
--   **Bahasa:** TypeScript.
+-   **Visual & Motion (Amandemen Redesign):**
+    -   Tema visual: **Obsidian Forge** (matte graphite carbon `#0C0D10`
+        dengan aksen Electric Tangerine `#FF6B2C` dan Indigo Slate
+        `#818CF8`). Tipografi: Space Grotesk (display), Geist (body),
+        JetBrains Mono (label/code).
+    -   Smooth scroll: Lenis (virtual scroll sinkron WebGL).
+    -   Lapisan 3D: React Three Fiber (R3F) untuk canvas background
+        partikel/grid yang reaktif terhadap kursor dan scroll.
+    -   Anggaran performa 3D: JS tambahan ≤ ~500KB gzip; DPR dibatasi 2
+        (1 di mobile); pause saat tab/cakupan tidak terlihat; target 60
+        FPS desktop dan 30+ FPS mobile menengah.
+    -   Aksesibilitas keras: `prefers-reduced-motion` menonaktifkan
+        smooth scroll dan animasi 3D total (kembali ke scroll native +
+        latar statis). Konten tetap terbaca 100% tanpa JavaScript.
+-   Bahasa: TypeScript.
 -   **Database:** Neon PostgreSQL.
 -   **ORM:** Drizzle ORM sebagai pilihan awal yang ringan dan cocok
     untuk PostgreSQL. Prisma dapat dipilih sebagai alternatif, tetapi
@@ -661,3 +679,20 @@ responsif dan aksesibilitas dasar telah diuji. - Build production
 berhasil. - README menjelaskan instalasi, konfigurasi environment,
 migrasi, dan deployment. - Tidak ada secret di repositori dan tidak ada
 klaim proyek yang belum terverifikasi.
+
+## 17. Amandemen Redesign Obsidian Forge
+
+-   Tema aktif adalah **Obsidian Forge**, menggantikan token navy/biru
+    elektrik sebelumnya.
+-   WebGL hanya sebagai lapisan visual non-esensial: konten, navigasi,
+    CMS, SEO, dan halaman tanpa JavaScript tidak boleh bergantung
+    padanya.
+-   Smooth scroll Lenis dan semua animasi 3D wajib nonaktif total bila
+    pengguna memilih `prefers-reduced-motion`, dan fallback ke scroll
+    native plus latar statis.
+-   Anggaran visual: JavaScript tambahan sekitar ≤500KB gzip; batasi DPR
+    maksimum 2 (1 pada perangkat mobile); jeda render saat tab atau
+    kanvas tidak terlihat; target pengukuran 60 FPS desktop dan 30+ FPS
+    mobile menengah.
+-   Klaim performa hanya boleh dibuat setelah pengukuran nyata pada
+    perangkat yang disebutkan.

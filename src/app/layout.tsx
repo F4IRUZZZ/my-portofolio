@@ -1,15 +1,29 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Geist, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 import { Suspense } from "react";
 import "./globals.css";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { SiteLoader } from "@/components/ui/SiteLoader";
+import { SmoothScroll } from "@/components/motion/SmoothScroll";
+import { WebglBackdrop } from "@/components/motion/WebglBackdrop";
 import { getSiteUrl } from "@/lib/site";
 
 const geist = Geist({
   subsets: ["latin"],
   display: "swap",
+});
+
+const display = Space_Grotesk({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-display",
+});
+
+const mono = JetBrains_Mono({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-mono",
 });
 
 const siteUrl = getSiteUrl();
@@ -63,8 +77,13 @@ export default function RootLayout({
   children,
 }: LayoutProps<"/">) {
   return (
-    <html lang="id" className={geist.className}>
+    <html
+      lang="id"
+      className={`${geist.className} ${display.variable} ${mono.variable}`}
+    >
       <body className="min-h-screen bg-background text-foreground antialiased">
+        <WebglBackdrop />
+        <SmoothScroll>
         <a
           href="#konten"
           className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-accent focus:px-4 focus:py-2 focus:text-sm focus:text-white"
@@ -77,6 +96,7 @@ export default function RootLayout({
         <NavbarShell />
         <div id="konten">{children}</div>
         <Footer />
+        </SmoothScroll>
       </body>
     </html>
   );

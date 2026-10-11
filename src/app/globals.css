@@ -1,38 +1,41 @@
 @import "tailwindcss";
+@import "lenis/dist/lenis.css";
 
 /*
- * Fairuz.dev — Design token (Design.md §3)
- * Tema gelap navy + aksen biru elektrik. Tailwind v4: token di @theme
+ * Fairuz.dev — Design token (Design.md Obsidian Forge)
+ * Tema graphite matte + aksen tangerine elektrik. Tailwind v4: token di @theme
  * menghasilkan utilitas seperti bg-background, text-muted, border-border.
  *
  * Pemetaan nama dokumen -> utilitas:
- * background #0B1020      -> bg-background
- * surface #111827         -> bg-surface
- * surface-elevated #182235 -> bg-elevated
+ * background #0C0D10      -> bg-background
+ * surface #131418         -> bg-surface
+ * surface-elevated #1B1D22 -> bg-elevated
  * text-primary #F8FAFC    -> text-foreground
- * text-secondary #AAB4C5  -> text-muted
- * accent #3B82F6          -> bg-accent / text-accent
- * accent-hover #60A5FA    -> hover states
- * border #273449          -> border-border
+ * text-secondary #94A3B8  -> text-muted
+ * accent #FF6B2C          -> bg-accent / text-accent
+ * accent-hover #FF7A42    -> hover states
+ * border rgba(255,255,255,0.07) -> border-border
  * success/warning/danger  -> status (selalu ditemani label teks, bukan warna saja)
  */
 @theme {
-  --color-background: #0b1020;
-  --color-surface: #111827;
-  --color-elevated: #182235;
+  --color-background: #0c0d10;
+  --color-surface: #131418;
+  --color-elevated: #1b1d22;
   --color-foreground: #f8fafc;
-  --color-muted: #aab4c5;
-  --color-accent: #3b82f6;
-  --color-accent-hover: #60a5fa;
-  --color-border: #273449;
+  --color-muted: #94a3b8;
+  --color-accent: #ff6b2c;
+  --color-accent-hover: #ff7a42;
+  --color-border: rgba(255, 255, 255, 0.07);
   --color-success: #22c55e;
   --color-warning: #f59e0b;
   --color-danger: #ef4444;
 
   --font-sans: "Geist", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  --radius-card: 0.875rem; /* 14px, dalam rentang 12–16px */
-  --radius-control: 0.5625rem; /* 9px, dalam rentang 8–10px */
+  --radius-card: 0.5rem; /* 8px kontainer Obsidian Forge */
+  --radius-control: 0.375rem; /* 6px kontrol Obsidian Forge */
 }
 
 html {
@@ -69,6 +72,28 @@ body {
   outline: 2px solid var(--color-accent-hover);
   outline-offset: 2px;
   border-radius: 4px;
+}
+
+/*
+ * Lapisan latar WebGL statis sementara. Canvas interaktif akan dipasang
+ * di dalam .webgl-backdrop pada Slice 2; konten tidak bergantung padanya.
+ */
+.webgl-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: clip;
+  background-color: var(--color-background);
+}
+
+.forge-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 24px 24px;
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 20%, black 30%, transparent 75%);
 }
 
 /*
