@@ -79,6 +79,7 @@ export type Profile = {
   publicEmail: string;
   githubUrl: string;
   linkedinUrl: string;
+  profileImageUrl: string | null;
 };
 
 export async function getProfile(): Promise<Profile> {
@@ -101,6 +102,7 @@ export async function getProfile(): Promise<Profile> {
     publicEmail: row.publicEmail ?? "",
     githubUrl: row.githubUrl ?? "",
     linkedinUrl: row.linkedinUrl ?? "",
+    profileImageUrl: row.profileImageUrl ?? null,
   };
 }
 

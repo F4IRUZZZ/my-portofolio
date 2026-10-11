@@ -36,6 +36,13 @@
       "when": 1791635946301,
       "tag": "0004_short_bushwacker",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1791710881588,
+      "tag": "0005_massive_moon_knight",
+      "breakpoints": true
     }
   ]
 }

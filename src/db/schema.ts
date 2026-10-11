@@ -54,6 +54,7 @@ export const profiles = pgTable("profiles", {
   githubUrl: text("github_url"),
   linkedinUrl: text("linkedin_url"),
   cvUrl: text("cv_url"),
+  profileImageUrl: text("profile_image_url"),
   ...timestamps,
 });
 
