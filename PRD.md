@@ -352,7 +352,21 @@ menu di UI.
 -   **Framework:** Next.js dengan App Router.
 -   **UI:** React.
 -   **Styling:** Tailwind CSS.
--   **Bahasa:** TypeScript.
+-   **Visual & Motion (Amandemen Redesign):**
+    -   Tema visual: **Obsidian Forge** (matte graphite carbon `#0C0D10`
+        dengan aksen Electric Tangerine `#FF6B2C` dan Indigo Slate
+        `#818CF8`). Tipografi: Space Grotesk (display), Geist (body),
+        JetBrains Mono (label/code).
+    -   Smooth scroll: Lenis (virtual scroll sinkron WebGL).
+    -   Lapisan 3D: React Three Fiber (R3F) untuk canvas background
+        partikel/grid yang reaktif terhadap kursor dan scroll.
+    -   Anggaran performa 3D: JS tambahan ≤ ~500KB gzip; DPR dibatasi 2
+        (1 di mobile); pause saat tab/cakupan tidak terlihat; target 60
+        FPS desktop dan 30+ FPS mobile menengah.
+    -   Aksesibilitas keras: `prefers-reduced-motion` menonaktifkan
+        smooth scroll dan animasi 3D total (kembali ke scroll native +
+        latar statis). Konten tetap terbaca 100% tanpa JavaScript.
+-   Bahasa: TypeScript.
 -   **Database:** Neon PostgreSQL.
 -   **ORM:** Drizzle ORM sebagai pilihan awal yang ringan dan cocok
     untuk PostgreSQL. Prisma dapat dipilih sebagai alternatif, tetapi

@@ -1,487 +1,233 @@
-# Design.md
-
-## UI/UX Design Specification
-
-### Fairuz.dev. Personal Developer Portfolio & CMS
-
--   **Versi dokumen:** 1.0
--   **Status:** Draft untuk validasi
--   **Produk:** Website portofolio Student Developer
--   **Gaya:** Profesional, minimalis, modern, berorientasi proyek
-
-------------------------------------------------------------------------
-
-## 1. Tujuan Desain
-
-Membuat website yang memberi kesan profesional, mudah dipindai, dan
-berfokus pada bukti karya. Website harus cocok untuk siswa RPL yang
-sedang membangun rekam jejak, tanpa berpura-pura memiliki pengalaman
-senior.
-
-Pengunjung harus bisa menjawab tiga pertanyaan dengan cepat: 1. Siapa
-Fairuz dan apa fokusnya? 2. Proyek dan pencapaian apa yang dapat
-dilihat? 3. Bagaimana cara menghubungi atau melihat karyanya lebih
-lanjut?
-
-Dashboard admin memiliki tujuan berbeda: mengelola konten dengan jelas,
-aman, dan efisien.
-
-## 2. Prinsip Desain
-
--   **Clarity first:** informasi penting lebih menonjol daripada
-    dekorasi.
--   **Project-focused:** proyek dan kontribusi ditampilkan sebelum
-    daftar teknologi yang panjang.
--   **Honest representation:** status proyek, peran, dan hasil ditulis
-    sesuai fakta.
--   **Consistent system:** warna, spacing, tipografi, tombol, dan form
-    mengikuti token yang sama.
--   **Responsive by default:** desain dibuat untuk layar ponsel hingga
-    desktop.
--   **Accessible:** kontras, keyboard focus, label, alt text, dan
-    struktur heading diperhatikan.
--   **Low maintenance:** komponen reusable dan pola layout konsisten.
-
-## 3. Identitas Visual
-
-### 3.1 Arah visual
-
-Gunakan tema gelap bernuansa navy dengan aksen biru elektrik, permukaan
-kartu sedikit lebih terang, dan teks berkontras tinggi. Hindari glow
-berlebihan, gradient mencolok di setiap komponen, dan dekorasi kode yang
-tidak memberi informasi.
-
-### 3.2 Palet warna awal
-
-  -----------------------------------------------------------------------
-  Token                   Nilai                   Penggunaan
-  ----------------------- ----------------------- -----------------------
-  `background`            `#0B1020`               Latar utama
-
-  `surface`               `#111827`               Kartu dan panel
-
-  `surface-elevated`      `#182235`               Hover atau panel yang
-                                                  lebih menonjol
-
-  `text-primary`          `#F8FAFC`               Judul dan teks utama
-
-  `text-secondary`        `#AAB4C5`               Deskripsi dan metadata
-
-  `accent`                `#3B82F6`               CTA, link, fokus
-
-  `accent-hover`          `#60A5FA`               Hover aksen
-
-  `border`                `#273449`               Border halus
-
-  `success`               `#22C55E`               Status berhasil
-
-  `warning`               `#F59E0B`               Status butuh perhatian
-
-  `danger`                `#EF4444`               Error dan tindakan
-                                                  destruktif
-  -----------------------------------------------------------------------
-
-Warna status perlu tetap memiliki label teks atau ikon. Jangan
-mengandalkan warna saja untuk menyampaikan arti. Uji kontras sebelum
-rilis.
-
-### 3.3 Tipografi
-
--   Rekomendasi: Geist atau Inter.
--   H1 desktop: sekitar 48--64 px, disesuaikan dengan panjang judul.
--   H1 mobile: sekitar 36--42 px.
--   H2: sekitar 28--36 px.
--   H3: sekitar 20--24 px.
--   Body: 16--18 px.
--   Metadata: 13--14 px, tetap terbaca.
--   Line-height body sekitar 1.5--1.7.
--   Batasi lebar paragraf agar mudah dibaca.
-
-### 3.4 Spacing dan radius
-
-Gunakan skala spacing berbasis kelipatan 4 atau 8 px. - Jarak
-antarbagian desktop: 80--112 px. - Jarak antarbagian mobile: 56--72
-px. - Padding kartu: 20--28 px. - Radius kartu: 12--16 px. - Radius
-tombol dan input: 8--10 px. - Border tipis dan shadow minimal.
-
-## 4. Navigasi dan Layout
-
-### 4.1 Navbar publik
-
-Desktop: - Brand `Fairuz.dev` di kiri. - Link: Tentang, Proyek,
-Prestasi, Pengalaman, Artikel jika aktif. - Tombol utama: Hubungi
-Saya. - Navbar sticky boleh digunakan jika tidak menghalangi konten.
-
-Mobile: - Brand di kiri dan tombol menu di kanan. - Menu dapat dibuka
-dengan keyboard dan screen reader. - Tutup menu setelah pengunjung
-memilih halaman. - Pastikan tidak terjadi horizontal overflow.
-
-### 4.2 Container
-
--   Lebar konten maksimum sekitar 1120--1200 px.
--   Gunakan padding horizontal responsif.
--   Teks panjang tidak memenuhi seluruh lebar layar.
--   Grid menyesuaikan jumlah kolom berdasarkan viewport.
-
-### 4.3 Footer
-
-Tampilkan nama/brand, tahun berjalan, tautan GitHub dan LinkedIn jika
-tersedia, email publik jika disetujui, serta tautan navigasi utama.
-Jangan menambahkan ikon sosial yang belum memiliki tujuan URL.
-
-## 5. Spesifikasi Halaman Publik
-
-### 5.1 Beranda `/`
-
-Urutan section: 1. Navbar. 2. Hero. 3. Ringkasan profil. 4. Proyek
-unggulan. 5. Prestasi utama. 6. Ringkasan pengalaman. 7. CTA kontak. 8.
-Footer.
-
-#### Hero
-
-Headline yang disarankan: \> Saya Fairuz, Student Developer yang
-membangun solusi digital melalui kode dan desain.
-
-Subheadline: \> Siswa kelas 12 Rekayasa Perangkat Lunak di SMK Negeri 10
-Surabaya. Tertarik pada pengembangan web, aplikasi, dan eksplorasi
-teknologi.
-
-CTA: - **Lihat Proyek** - **Tentang Saya** - Tautan unduh CV hanya
-muncul jika file CV sudah tersedia.
-
-Tampilkan label Student Developer. Jangan menambahkan angka pengalaman,
-jumlah proyek, atau metrik yang belum diverifikasi.
-
-#### Proyek unggulan
-
--   Desktop: grid 2 kolom atau layout editorial dengan satu proyek
-    utama.
--   Mobile: satu kolom.
--   Setiap kartu berisi cover, judul, ringkasan, kategori, TechStack
-    terbatas, status proyek, dan tautan detail.
--   Bedakan status pengerjaan dari status publikasi.
--   Jangan gunakan gambar mockup yang seolah-olah merupakan screenshot
-    produk nyata.
-
-#### Prestasi
-
-Tampilkan Juara 3 LKS tingkat Kota Surabaya bidang Artificial
-Intelligence sebagai pencapaian utama. Tambahkan tahun hanya setelah
-dikonfirmasi. Gunakan dokumentasi asli jika ada izin.
-
-#### Pengalaman
-
-Tampilkan linimasa ringkas dua pengalaman PKL: - ITS, Direktorat
-Pendidikan Sarjana & Pascasarjana. - PT Daksa Consultant Indonesia.
-
-Jelaskan tugas operasional dan kontribusi proyek secara terpisah agar
-tidak membesar-besarkan ruang lingkup pekerjaan.
-
-### 5.2 Tentang Saya `/about`
-
-Section yang disarankan: - Bio singkat. - Pendidikan. - Perjalanan
-belajar. - Area minat. - TechStack berdasarkan tingkat pengalaman. - CTA
-ke proyek dan kontak.
-
-Kelompok TechStack: - **Pernah digunakan:** PHP, CSS, JavaScript dasar,
-Python, CustomTkinter, Figma, draw.io. - **Sedang dikembangkan:**
-Next.js, React, Tailwind CSS, TypeScript jika sudah mulai digunakan
-langsung. - **Sedang dipelajari/direncanakan:** IoT atau UI/UX mobile
-jika pembelajaran tersebut sudah benar-benar dimulai.
-
-Jangan memakai persentase kemampuan seperti "PHP 90%". Gunakan label
-yang lebih jujur, misalnya Pernah digunakan, Sedang dipelajari, atau
-Digunakan pada proyek.
-
-### 5.3 Daftar proyek `/projects`
-
--   Judul halaman dan pengantar pendek.
--   Filter kategori jika jumlah proyek sudah cukup banyak.
--   Kartu proyek dengan gambar, ringkasan, teknologi, dan status.
--   Empty state yang menjelaskan jika belum ada proyek untuk kategori
-    tertentu.
--   Jangan membuat filter yang tidak bekerja.
-
-Kategori awal: - Web Development - Desktop Application - UI/UX Design -
-Artificial Intelligence - Other
-
-Kategori hanya ditampilkan jika sesuai dengan karya yang benar-benar
-tersedia.
-
-### 5.4 Detail proyek `/projects/[slug]`
-
-Urutan konten: 1. Breadcrumb. 2. Judul dan ringkasan. 3. Status
-pengerjaan dan kategori. 4. Cover atau galeri screenshot. 5. Ringkasan
-konteks dan masalah. 6. Peran dan kontribusi pribadi. 7. Fitur yang
-telah dibuat. 8. TechStack. 9. Proses dan keputusan teknis. 10.
-Tantangan dan pembelajaran. 11. Status saat ini dan keterbatasan. 12.
-Repository/demo jika tersedia. 13. Proyek terkait.
-
-#### Konten awal: Sistem Layanan KTM Hilang
-
--   Teknologi yang diketahui: PHP, CSS, pola MVC, dan database MySQL.
--   Struktur kode yang terlihat dari arsip mencakup controller, model,
-    middleware autentikasi, view, dan skrip SQL.
--   Area fitur yang terlihat dari nama modul meliputi laporan KTM,
-    pengecekan status, dashboard admin, pengelolaan akun, dan rekap.
-    Verifikasi perilaku setiap fitur sebelum menyatakan semuanya
-    berfungsi.
--   Status: belum tuntas ketika periode PKL berakhir.
--   Ceritakan kontribusi yang benar-benar dilakukan oleh Fairuz.
--   Jangan tampilkan informasi mahasiswa, data KTM, kredensial, atau
-    data internal.
--   Jangan menjanjikan demo live jika aplikasi belum aman dan siap
-    digunakan.
-
-#### Konten awal: Website PKL kedua
-
--   Teknologi yang disebutkan: Next.js, React, Tailwind CSS.
--   Tujuan: website dengan CMS artikel dan layanan konsultasi.
--   Database masih dalam tahap penentuan saat informasi awal diberikan.
--   Status: dalam pengerjaan.
--   Pisahkan pekerjaan desain konten Instagram menggunakan Canva dari
-    kontribusi pada proyek website.
--   Publikasikan hanya informasi dan aset yang telah mendapat izin.
-
-### 5.5 Prestasi `/achievements`
-
--   Kartu prestasi berisi peringkat, lomba, bidang,
-    penyelenggara/tingkat, tahun jika diketahui, dan ringkasan.
--   Gunakan dokumentasi atau sertifikat jika tersedia dan boleh
-    dipublikasikan.
--   Jangan membuat sertifikat, logo penyelenggara, atau tanggal fiktif.
-
-### 5.6 Pengalaman `/experience`
-
-Gunakan timeline vertikal atau kartu pengalaman. Setiap entri berisi: -
-Organisasi. - Periode yang telah dikonfirmasi. - Ringkasan kegiatan. -
-Kontribusi yang relevan. - Proyek terkait. - Teknologi jika benar-benar
-digunakan pada pengalaman tersebut.
-
-Jangan menempatkan tugas layanan mahasiswa sebagai tugas coding.
-Tampilkan keduanya secara jujur dan jelaskan bahwa proyek website KTM
-diberikan menjelang akhir periode PKL.
-
-### 5.7 Artikel `/articles` dan `/articles/[slug]`
-
-Fitur ini merupakan prioritas P1 jika belum dibutuhkan pada rilis
-pertama. - Daftar artikel berbentuk grid yang rapi. - Kartu berisi
-judul, ringkasan, tanggal, tag, dan gambar opsional. - Detail artikel
-memiliki lebar baca yang nyaman. - Gunakan format heading, list, code
-block, dan gambar yang konsisten. - Artikel draft tidak dapat diakses
-publik. - Jika belum ada artikel, tampilkan empty state atau sembunyikan
-tautan artikel dari navigasi.
-
-### 5.8 Kontak `/contact`
-
--   Email publik dan tautan sosial yang sudah diverifikasi.
--   Tombol copy email boleh ditambahkan jika benar-benar berfungsi.
--   `mailto:` dapat digunakan sebagai opsi sederhana.
--   Jangan menampilkan form kontak tanpa backend pengiriman atau
-    penyimpanan pesan.
-
-## 6. Spesifikasi Dashboard CMS
-
-### 6.1 Layout admin
-
--   Sidebar desktop dengan menu: Dashboard, Proyek, Artikel, Prestasi,
-    Pengalaman, Profil, Media jika tersedia, Pengaturan.
--   Mobile menggunakan drawer atau navigasi yang dapat diakses.
--   Area konten utama memiliki judul halaman, breadcrumb bila perlu, dan
-    aksi utama.
--   Visual admin tetap konsisten dengan brand, tetapi mengutamakan
-    keterbacaan dan efisiensi.
-
-### 6.2 Dashboard
-
-Tampilkan: - Jumlah proyek published dan draft. - Jumlah artikel
-published dan draft jika fitur artikel aktif. - Shortcut Tambah
-Proyek. - Daftar konten terbaru. - Peringatan jika profil belum lengkap.
-
-Angka harus berasal dari data database. Jangan menampilkan angka statis
-seolah-olah data nyata.
-
-### 6.3 Daftar konten
-
--   Tabel pada desktop dan tampilan kartu/list pada mobile.
--   Kolom: judul, status, tanggal pembaruan, dan aksi.
--   Search atau filter ditambahkan sesuai kebutuhan nyata.
--   Sediakan loading, empty, error, dan success state.
--   Aksi hapus memerlukan dialog konfirmasi.
--   Status publikasi ditampilkan dengan teks, bukan warna saja.
-
-### 6.4 Form proyek
-
-Field: - Judul. - Slug. - Ringkasan. - Deskripsi. - Kategori. -
-TechStack. - Peran dan kontribusi. - Status pengerjaan. - Status
-publikasi. - Featured. - Cover dan media tambahan. - Repository/demo
-opsional. - Periode proyek opsional. - Tantangan dan pembelajaran.
-
-Perilaku: - Validasi field wajib. - Berikan preview slug. - Tangani slug
-duplikat dengan pesan yang jelas. - Sediakan Simpan Draft dan
-Publikasikan. - Konfirmasi sebelum membuang perubahan yang belum
-disimpan jika implementasinya mendukung. - Jangan menampilkan status
-sukses sebelum server mengonfirmasi operasi.
-
-### 6.5 Form artikel
-
-Field: - Judul. - Slug. - Ringkasan. - Isi. - Cover opsional. - Tag
-opsional. - Status draft/published. - Metadata SEO.
-
-Editor dapat dimulai dengan textarea/Markdown editor sederhana.
-Rich-text editor kompleks tidak wajib untuk rilis pertama.
-
-### 6.6 Autentikasi dan keamanan
-
--   Satu admin, tanpa sign-up publik.
--   Login, logout, dan sesi menggunakan mekanisme yang sesuai dengan
-    solusi autentikasi terpilih.
--   Route dan operasi data diperiksa di server.
--   Tampilkan pesan error umum dan tidak membocorkan apakah email
-    terdaftar.
--   Jangan menaruh secret di client components.
--   Form admin memiliki label, validasi, loading state, dan error state.
-
-## 7. Design System dan Komponen
-
-Komponen reusable yang disarankan: - `Container` - `Navbar` -
-`MobileNavigation` - `Footer` - `SectionHeading` - `PrimaryButton` -
-`SecondaryButton` - `ProjectCard` - `TechnologyTag` - `StatusBadge` -
-`AchievementCard` - `ExperienceTimeline` - `SocialLink` - `EmptyState` -
-`ErrorState` - `LoadingSkeleton` - `FormField` - `ConfirmDialog` -
-`AdminSidebar` - `AdminHeader` - `DataTable` atau `ResponsiveDataList`
-
-Gunakan semantic HTML. Tombol untuk aksi, link untuk navigasi. Jangan
-menggunakan `div` sebagai tombol tanpa kebutuhan khusus dan dukungan
-aksesibilitas.
-
-## 8. Motion dan Interaksi
-
--   Transisi warna dan border sekitar 150--250 ms.
--   Animasi masuk section boleh digunakan secara ringan.
--   Hindari scroll hijacking, animasi yang menghalangi pembacaan, dan
-    efek parallax berat.
--   Hormati `prefers-reduced-motion`.
--   Semua hover state harus memiliki padanan focus state.
--   Loading state digunakan untuk operasi asinkron.
--   Hindari interaksi dekoratif yang tidak membantu pengguna.
-
-## 9. Responsivitas
-
-Breakpoint dapat mengikuti breakpoint standar Tailwind, lalu disesuaikan
-saat implementasi.
-
--   **Mobile:** satu kolom, navigasi ringkas, tombol mudah disentuh,
-    teks tidak terlalu kecil.
--   **Tablet:** dua kolom jika konten sesuai.
--   **Desktop:** grid proyek dua atau tiga kolom sesuai lebar, container
-    terpusat, navigasi penuh.
--   **Admin mobile:** tabel harus berubah menjadi list/kartu atau
-    menyediakan overflow yang terkontrol.
-
-Uji sekurangnya pada lebar sekitar 360 px, 768 px, 1024 px, dan 1440 px.
-
-## 10. Aksesibilitas
-
--   Kontras teks memenuhi WCAG AA jika memungkinkan.
--   Fokus keyboard jelas.
--   Semua input mempunyai label.
--   Ikon aksi memiliki accessible name.
--   Gambar informatif mempunyai alt text; gambar dekoratif menggunakan
-    alt kosong.
--   Dialog mengelola fokus dan dapat ditutup dengan keyboard.
--   Status sukses dan error diumumkan secara sesuai.
--   Heading tidak melompat tingkat tanpa alasan.
--   Jangan menggunakan warna sebagai satu-satunya penanda status.
-
-## 11. Konten dan Copywriting
-
-Gunakan bahasa Indonesia sebagai bahasa utama. Istilah teknologi umum
-seperti TechStack, CMS, CRUD, dan deployment dapat dipertahankan.
-
-Nada: - Profesional. - Jelas dan ringkas. - Rendah hati, tetapi percaya
-diri. - Berorientasi pada kontribusi dan pembelajaran. - Tidak mengklaim
-sebagai senior/expert.
-
-Contoh headline: \> Saya Fairuz, Student Developer yang membangun solusi
-digital melalui kode dan desain.
-
-Contoh ringkasan proyek KTM: \> Website layanan pengurusan KTM hilang
-yang dikembangkan selama PKL di ITS menggunakan PHP dengan pola MVC.
-Proyek ini mencakup modul pelaporan dan pengelolaan oleh admin, dengan
-status akhir yang masih dalam pengembangan karena keterbatasan waktu
-PKL.
-
-Ringkasan tersebut harus ditinjau ulang setelah fitur yang benar-benar
-berjalan diverifikasi.
-
-## 12. Status dan Empty State
-
-Gunakan label yang konsisten: - `In Progress` --- pengerjaan belum
-selesai. - `Completed` --- selesai sesuai ruang lingkup yang
-ditetapkan. - `Archived` --- tidak lagi aktif dikembangkan. - `Draft`
---- belum dipublikasikan. - `Published` --- tersedia untuk publik.
-
-Status proyek berbeda dari status publikasi. Proyek `In Progress` boleh
-`Published` jika pemilik ingin menjelaskan progresnya secara terbuka.
-
-Contoh empty state: - Proyek: "Proyek akan ditambahkan di sini." -
-Artikel: "Belum ada artikel yang dipublikasikan." - Pencarian: "Tidak
-ada hasil yang cocok. Coba kata kunci lain."
-
-## 13. Aturan Gambar dan Media
-
--   Gunakan screenshot proyek asli jika diizinkan.
--   Jangan menggunakan screenshot berisi nama, nomor mahasiswa, KTM,
-    email pribadi, kredensial, atau informasi internal.
--   Sediakan placeholder netral saat gambar belum tersedia.
--   Pertahankan rasio gambar yang konsisten pada kartu.
--   Optimalkan ukuran gambar.
--   Semua gambar harus mempunyai tujuan visual atau informasional yang
-    jelas.
-
-## 14. Hal yang Harus Dihindari
-
--   Skill bar persentase yang tidak terukur.
--   Testimoni palsu.
--   Statistik proyek atau pengguna yang dibuat-buat.
--   Logo perusahaan atau institusi tanpa kebutuhan dan izin yang sesuai.
--   Tombol yang tidak bekerja.
--   Data demo yang tampil seperti data asli di production.
--   Placeholder `#` untuk tautan yang seolah-olah sudah tersedia.
--   Animasi berlebihan.
--   Mengklaim proyek PKL sudah selesai ketika masih dalam pengembangan.
--   Memublikasikan aset perusahaan tanpa izin.
-
-## 15. Acceptance Checklist Desain
-
--   [ ] Identitas Student Developer terlihat jelas pada beranda.
--   [ ] Proyek unggulan mudah ditemukan.
--   [ ] Status proyek dan kontribusi dijelaskan dengan jujur.
--   [ ] Navigasi konsisten di semua halaman.
--   [ ] Kartu proyek memiliki struktur dan tinggi yang rapi.
--   [ ] Tampilan mobile tidak mengalami horizontal overflow.
--   [ ] Semua tombol, link, input, dan dialog memiliki state yang
-    sesuai.
--   [ ] Focus state dan kontras memadai.
--   [ ] Halaman admin mudah digunakan pada desktop dan mobile.
--   [ ] Draft tidak terlihat oleh pengunjung publik.
--   [ ] Konten yang belum tersedia tidak diganti dengan data fiktif.
--   [ ] Gambar dan detail proyek telah diperiksa izinnya.
-
-## 16. Instruksi untuk Implementasi UI
-
-1.  Baca `PRD.md` untuk memahami cakupan fitur dan kriteria penerimaan.
-2.  Implementasikan design token dan komponen reusable sebelum membangun
-    seluruh halaman.
-3.  Gunakan Next.js App Router, React, Tailwind CSS, dan TypeScript.
-4.  Utamakan halaman publik dan alur CMS P0.
-5.  Gunakan data contoh hanya di lingkungan development dan tandai
-    dengan jelas.
-6.  Jangan mengarang informasi profil, tanggal, hasil, atau tautan.
-7.  Buat loading, empty, error, success, dan disabled state untuk
-    komponen yang memerlukannya.
-8.  Uji responsivitas, aksesibilitas keyboard, kontras, dan navigasi.
-9.  Jangan membuat tombol atau menu yang hanya bersifat dekoratif.
-10. Jika detail visual belum ditetapkan, ikuti prinsip pada dokumen ini
-    dan pilih implementasi yang paling sederhana serta konsisten.
+---
+name: Obsidian Forge
+colors:
+  surface: '#121316'
+  surface-dim: '#121316'
+  surface-bright: '#38393c'
+  surface-container-lowest: '#0d0e11'
+  surface-container-low: '#1b1b1f'
+  surface-container: '#1f1f23'
+  surface-container-high: '#292a2d'
+  surface-container-highest: '#343538'
+  on-surface: '#e3e2e6'
+  on-surface-variant: '#e2bfb3'
+  inverse-surface: '#e3e2e6'
+  inverse-on-surface: '#303034'
+  outline: '#a98a7f'
+  outline-variant: '#594139'
+  surface-tint: '#ffb59a'
+  primary: '#ffb59a'
+  on-primary: '#5b1b00'
+  primary-container: '#ff6b2c'
+  on-primary-container: '#5c1c00'
+  inverse-primary: '#a83900'
+  secondary: '#bdc2ff'
+  on-secondary: '#131e8c'
+  secondary-container: '#2f3aa3'
+  on-secondary-container: '#a8afff'
+  tertiary: '#ffb95f'
+  on-tertiary: '#472a00'
+  tertiary-container: '#d58800'
+  on-tertiary-container: '#482b00'
+  error: '#ffb4ab'
+  on-error: '#690005'
+  error-container: '#93000a'
+  on-error-container: '#ffdad6'
+  primary-fixed: '#ffdbcf'
+  primary-fixed-dim: '#ffb59a'
+  on-primary-fixed: '#380d00'
+  on-primary-fixed-variant: '#802900'
+  secondary-fixed: '#e0e0ff'
+  secondary-fixed-dim: '#bdc2ff'
+  on-secondary-fixed: '#000767'
+  on-secondary-fixed-variant: '#2f3aa3'
+  tertiary-fixed: '#ffddb8'
+  tertiary-fixed-dim: '#ffb95f'
+  on-tertiary-fixed: '#2a1700'
+  on-tertiary-fixed-variant: '#653e00'
+  background: '#121316'
+  on-background: '#e3e2e6'
+  surface-variant: '#343538'
+typography:
+  headline-2xl:
+    fontFamily: Space Grotesk
+    fontSize: 56px
+    fontWeight: '700'
+    lineHeight: 64px
+    letterSpacing: -0.03em
+  headline-2xl-mobile:
+    fontFamily: Space Grotesk
+    fontSize: 36px
+    fontWeight: '700'
+    lineHeight: 44px
+    letterSpacing: -0.02em
+  headline-xl:
+    fontFamily: Space Grotesk
+    fontSize: 40px
+    fontWeight: '600'
+    lineHeight: 48px
+    letterSpacing: -0.025em
+  headline-xl-mobile:
+    fontFamily: Space Grotesk
+    fontSize: 28px
+    fontWeight: '600'
+    lineHeight: 36px
+    letterSpacing: -0.02em
+  headline-lg:
+    fontFamily: Space Grotesk
+    fontSize: 28px
+    fontWeight: '600'
+    lineHeight: 36px
+    letterSpacing: -0.02em
+  headline-md:
+    fontFamily: Space Grotesk
+    fontSize: 20px
+    fontWeight: '600'
+    lineHeight: 28px
+    letterSpacing: -0.015em
+  body-lg:
+    fontFamily: Geist
+    fontSize: 18px
+    fontWeight: '400'
+    lineHeight: 28px
+  body-md:
+    fontFamily: Geist
+    fontSize: 15px
+    fontWeight: '400'
+    lineHeight: 24px
+  body-sm:
+    fontFamily: Geist
+    fontSize: 13px
+    fontWeight: '400'
+    lineHeight: 20px
+  label-lg:
+    fontFamily: JetBrains Mono
+    fontSize: 14px
+    fontWeight: '500'
+    lineHeight: 20px
+    letterSpacing: 0.02em
+  label-md:
+    fontFamily: JetBrains Mono
+    fontSize: 12px
+    fontWeight: '500'
+    lineHeight: 16px
+    letterSpacing: 0.04em
+  label-sm:
+    fontFamily: JetBrains Mono
+    fontSize: 11px
+    fontWeight: '400'
+    lineHeight: 14px
+    letterSpacing: 0.06em
+rounded:
+  sm: 0.125rem
+  DEFAULT: 0.25rem
+  md: 0.375rem
+  lg: 0.5rem
+  xl: 0.75rem
+  full: 9999px
+spacing:
+  gutter: 1.5rem
+  gutter-mobile: 1rem
+  margin: 3rem
+  margin-mobile: 1.25rem
+  space-xs: 0.25rem
+  space-sm: 0.5rem
+  space-md: 1rem
+  space-lg: 1.5rem
+  space-xl: 2.5rem
+---
+
+## Brand & Style
+
+The design system projects precision engineering, high-craft digital fabrication, and kinetic technical capability. Tailored for a standout developer portfolio, it rejects both safe corporate blue palettes and generic terminal-emerald themes in favor of an **Industrial Forge** aesthetic: deep obsidian carbons juxtaposed against high-voltage kinetic amber and structured technical indicators.
+
+The emotional signature is intense yet disciplined—like looking into an illuminated CNC milling chamber or high-grade precision hardware rig. It balances raw engineering muscle with meticulous restraint, signaling someone who constructs robust production architectures rather than surface-level mockups.
+
+## Colors
+
+The palette is strictly anchored in deep carbon neutrals and electric industrial accents:
+
+- **Canvas & Surface Tiering**:
+  - `bg-base`: `#0C0D10` — Pure matte graphite carbon. Absorptive, non-blue canvas base.
+  - `surface-1`: `#131418` — Subtle obsidian foundation for cards, sidebars, and structural containers.
+  - `surface-2`: `#1B1D22` — Elevated interactive modules, inputs, active states, and code blocks.
+  - `surface-3`: `#262930` — Floating overlays, popovers, and interactive focus states.
+
+- **Accent Directives**:
+  - `primary`: `#FF6B2C` (Electric Tangerine) — The signature heat source. Used for key conversion moments, active project indicators, interactive hovers, and focal highlights.
+  - `secondary`: `#818CF8` (Cyber Violet / Indigo Slate) — Used for secondary technical categories, architecture metadata, and compiler/runtime tags.
+  - `tertiary`: `#F59E0B` (Molten Amber) — Used for telemetry alerts, benchmark highlights, and git commit activity.
+
+- **Borders & Dividers**:
+  - `border-subtle`: `rgba(255, 255, 255, 0.07)` — Hairline precision boundaries.
+  - `border-strong`: `#23262F` — Distinct technical segment dividers.
+  - `border-accent`: `rgba(255, 107, 44, 0.4)` — Active focus rings and interactive hover states.
+
+- **Typography & Foreground**:
+  - `text-primary`: `#F8FAFC` — Stark high-contrast titanium white for razor-sharp legibility.
+  - `text-secondary`: `#94A3B8` — Balanced slate gray for explanations, documentation, and body copy.
+  - `text-tertiary`: `#64748B` — Subdued technical metadata, line numbers, and timestamps.
+
+## Typography
+
+The typographic hierarchy enforces a calibrated balance between experimental geometry, technical precision, and effortless readability:
+
+- **Display & Headlines (`Space Grotesk`)**: Provides purposeful geometric cuts and structural character. Tight negative tracking gives hero copy and project titles an intentional, engineered punch.
+- **Body & Documentation (`Geist`)**: Delivers hyper-neutral, developer-grade reading clarity for case studies, architecture narratives, and project post-mortems.
+- **Labels, Telemetry & Code (`JetBrains Mono`)**: Dictates stack tags, commit timestamps, file paths, metric readouts, and tabular data. Rendered uppercase for micro-labels to simulate machine chassis engraving.
+
+## Layout & Spacing
+
+This design system uses a strict **12-column fluid grid** contained within a maximum width of `1280px` on desktop, adapting down to an 8-column layout on tablet (`768px - 1024px`) and a 4-column layout on mobile (`< 768px`).
+
+- **Vertical Rhythm**: Built upon a base `4px / 8px` increment. Section separation defaults to `space-xl` scaled dynamically (up to `5rem` for major section transitions).
+- **Layout Model**: Employs structural containment blocks framed with subtle perimeter borders (`1px solid rgba(255, 255, 255, 0.07)`), evoking modular rack-mounted hardware chassis.
+- **Responsive Handling**: Side-by-side terminal demos and architecture diagrams collapse beneath copy blocks on mobile screens while maintaining unbroken vertical alignment with grid margins.
+
+## Elevation & Depth
+
+Visual hierarchy is maintained through **tonal surfacing and razor-sharp 1px dark borders** rather than diffuse drop shadows:
+
+- **Level 0 (Canvas Base)**: `#0C0D10` with zero elevation. Features a very subtle 24px micro-grid overlay (`rgba(255, 255, 255, 0.02)`) across wide display areas.
+- **Level 1 (Card / Container Layer)**: `#131418` framed with `1px solid rgba(255, 255, 255, 0.07)`. No ambient shadow.
+- **Level 2 (Interactive Floating / Active State)**: `#1B1D22` framed with `#23262F`. Paired with a restrained, directional amber luminescence: `box-shadow: 0 4px 20px -2px rgba(255, 107, 44, 0.12)`.
+- **Level 3 (Modal / Command Palette)**: `#1B1D22` floating over a backdrop-blur scrim (`rgba(12, 13, 16, 0.85)` with `12px blur`), outlined with a distinct `1px solid rgba(255, 255, 255, 0.12)` boundary.
+
+## Shapes
+
+The system relies on compact, disciplined rounding:
+- Standard UI modules, buttons, inputs, and project cards adhere to `6px` (`roundedness: 1`, with small elements using `4px` and large containers capped at `8px`).
+- Sharp geometric discipline communicates durability and machine precision. Avoid fluid pill contours or exaggerated stadium buttons; boundaries must feel laser-machined.
+
+## Components
+
+### Buttons
+- **Primary Forge Action**: Solid `#FF6B2C` background, `#0C0D10` high-contrast bold typography (`Space Grotesk` or `Geist SemiBold`), 6px border radius, 0px border. On hover: shifts to `#FF7A42` with an ambient glow (`0 0 16px rgba(255, 107, 44, 0.3)`).
+- **Secondary Ghost Action**: `#131418` background, 1px solid `rgba(255, 255, 255, 0.1)`, `#F8FAFC` text. On hover: border transitions to `rgba(255, 107, 44, 0.5)` and text shifts to `#FF6B2C`.
+- **Icon / Utility Button**: 36x36px square with 6px border radius, `#131418` fill, `#94A3B8` icon color, subtle hover elevation.
+
+### Badges & Technical Chips
+- **Tech Stack Chips**: Background `#1B1D22`, border `1px solid rgba(255, 255, 255, 0.08)`, text `#94A3B8`, typography `label-sm` (`JetBrains Mono`).
+- **Accent Indicator Chips**: Background `rgba(129, 140, 248, 0.1)`, border `1px solid rgba(129, 140, 248, 0.25)`, text `#818CF8`.
+- **Status Indicator**: Features a pulsing 6px circular dot (`#FF6B2C` or `#22C55E`) flanked by an uppercase mono label (e.g., `SYS: ONLINE` or `AVAILABLE FOR CONTRACT`).
+
+### Cards & Work Showcases
+- **Container**: Fill `#131418`, border `1px solid rgba(255, 255, 255, 0.07)`, padding `space-lg`, border-radius `8px`.
+- **Hover Micro-interaction**: Border color sharpens to `rgba(255, 107, 44, 0.45)`, card header subtly shifts +2px vertically.
+- **Top Edge Metric Bar**: Optional 1px linear gradient highlight along the top border (`transparent 0%, #FF6B2C 50%, transparent 100%`) for featured case studies.
+
+### Inputs & Terminal Fields
+- **Base Input**: Fill `#0C0D10`, border `1px solid #23262F`, typography `body-md`, placeholder color `#475569`.
+- **Focus State**: Border transitions to `#FF6B2C`, box-shadow `0 0 0 1px #FF6B2C`. Monospace prompt prefix (`> `) prepends interactive inputs.
+
+### Lists & Technical Tables
+- **Dividers**: Separated by hairline 1px rules (`rgba(255, 255, 255, 0.06)`).
+- **Row Interaction**: Hovering highlights the background to `#1B1D22` with an inline monospace arrow marker (`->`) sliding into view.
+
+### Checkboxes & Switches
+- **Checkbox**: 18x18px square with 4px corner radius, background `#131418`, border `1px solid #23262F`. Checked state: solid `#FF6B2C` with a stark `#0C0D10` checkmark.
+- **Switch**: Rigid track (`36x20px`, `#1B1D22`), active track fill `rgba(255, 107, 44, 0.25)`, toggle thumb (`14x14px`, 3px radius, `#FF6B2C`).
+
+### Portfolio-Specific Components
+- **Code & Architecture Snippet Viewer**: Chrome header featuring current file path in `JetBrains Mono` (`label-sm`), syntax highlighting keyed to graphite, neon amber, and violet tokens, copy button with quick feedback tick.
+- **Live Metric / Benchmark Readout**: Compact panel rendering key statistics (e.g., `p99 latency < 12ms`, `Bundle size 4.2kB`) with large numeric figures in `Space Grotesk` and mono descriptor labels underneath.
