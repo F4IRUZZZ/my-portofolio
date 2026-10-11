@@ -6,6 +6,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { AchievementCard } from "@/components/ui/AchievementCard";
 import { ExperienceTimeline } from "@/components/ui/ExperienceTimeline";
 import { ProjectCard } from "@/components/ui/ProjectCard";
+import { ProfilePhoto } from "@/components/ui/ProfilePhoto";
 import { Reveal } from "@/components/ui/Reveal";
 import {
   getAchievement,
@@ -45,7 +46,8 @@ export default async function Home() {
       <section aria-labelledby="hero-heading" className="py-16 sm:py-24">
         <Container>
           <Reveal>
-            <div className="max-w-2xl">
+            <div className="grid items-center gap-10 lg:grid-cols-[5fr_3fr]">
+              <div className="max-w-2xl">
               <p className="inline-flex items-center rounded-full border border-border bg-surface px-3 py-1 text-xs font-medium text-muted">
                 {profile.headline}
               </p>
@@ -61,6 +63,14 @@ export default async function Home() {
               <div className="mt-8 flex flex-wrap gap-3">
                 <PrimaryButton href="/projects">Lihat Proyek</PrimaryButton>
                 <SecondaryButton href="/about">Tentang Saya</SecondaryButton>
+              </div>
+              </div>
+              <div className="mx-auto w-full max-w-[240px] lg:mx-0 lg:max-w-none">
+                <ProfilePhoto
+                  imageUrl={profile.profileImageUrl}
+                  name={profile.fullName}
+                  shape="circle"
+                />
               </div>
             </div>
           </Reveal>
