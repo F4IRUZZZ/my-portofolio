@@ -317,10 +317,14 @@ menu di UI.
 ### NFR-03. Performa
 
 -   Gunakan optimasi gambar Next.js sesuai layanan storage.
--   Hindari animasi berat dan dependensi yang tidak dibutuhkan.
+-   Hindari animasi berat dan dependensi yang tidak dibutuhkan, kecuali
+    lapisan visual Obsidian Forge yang disetujui dalam Amandemen Redesign.
 -   Target Lighthouse awal: Performance, Accessibility, Best Practices,
     dan SEO diupayakan mencapai 90+ pada halaman representatif, tanpa
     menjadikan skor sebagai pengganti pengujian pengguna.
+-   Pengecualian Redesign: lapisan WebGL dekoratif boleh menurunkan skor
+    Performance sintetis selama konten tetap cepat, terukur, dan memiliki
+    fallback non-WebGL; hasil aktual harus dilaporkan, bukan diklaim.
 
 ### NFR-04. Keamanan
 
@@ -675,3 +679,20 @@ responsif dan aksesibilitas dasar telah diuji. - Build production
 berhasil. - README menjelaskan instalasi, konfigurasi environment,
 migrasi, dan deployment. - Tidak ada secret di repositori dan tidak ada
 klaim proyek yang belum terverifikasi.
+
+## 17. Amandemen Redesign Obsidian Forge
+
+-   Tema aktif adalah **Obsidian Forge**, menggantikan token navy/biru
+    elektrik sebelumnya.
+-   WebGL hanya sebagai lapisan visual non-esensial: konten, navigasi,
+    CMS, SEO, dan halaman tanpa JavaScript tidak boleh bergantung
+    padanya.
+-   Smooth scroll Lenis dan semua animasi 3D wajib nonaktif total bila
+    pengguna memilih `prefers-reduced-motion`, dan fallback ke scroll
+    native plus latar statis.
+-   Anggaran visual: JavaScript tambahan sekitar ≤500KB gzip; batasi DPR
+    maksimum 2 (1 pada perangkat mobile); jeda render saat tab atau
+    kanvas tidak terlihat; target pengukuran 60 FPS desktop dan 30+ FPS
+    mobile menengah.
+-   Klaim performa hanya boleh dibuat setelah pengukuran nyata pada
+    perangkat yang disebutkan.

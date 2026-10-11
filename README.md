@@ -9,6 +9,7 @@ Bahasa utama konten: Bahasa Indonesia.
 
 - Next.js 16 (App Router, cacheComponents) + React 19 + TypeScript 5
 - Tailwind CSS v4 + ESLint 9
+- Visual: Space Grotesk, JetBrains Mono, Lenis, React Three Fiber + Three.js
 - Neon PostgreSQL + Drizzle ORM + Zod (Fase 3)
 - Auth.js (next-auth v4 stabil) dengan login Google khusus admin (Fase 3)
 - Package manager: npm

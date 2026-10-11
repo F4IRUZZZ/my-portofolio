@@ -231,3 +231,17 @@ The system relies on compact, disciplined rounding:
 ### Portfolio-Specific Components
 - **Code & Architecture Snippet Viewer**: Chrome header featuring current file path in `JetBrains Mono` (`label-sm`), syntax highlighting keyed to graphite, neon amber, and violet tokens, copy button with quick feedback tick.
 - **Live Metric / Benchmark Readout**: Compact panel rendering key statistics (e.g., `p99 latency < 12ms`, `Bundle size 4.2kB`) with large numeric figures in `Space Grotesk` and mono descriptor labels underneath.
+
+## Motion, WebGL, and Fallbacks
+
+- WebGL adalah lapisan latar dekoratif: tidak boleh membawa konten,
+  navigasi, formulir, status, atau makna yang tidak tersedia di DOM.
+- Gunakan smooth scroll virtual hanya bila pengguna tidak meminta
+  pengurangan gerak; jika tidak, gunakan scroll native.
+- Jika WebGL, shader, atau pustaka gagal dimuat, tampilkan latar statis
+  Obsidian Forge tanpa error dan tanpa mengubah konten.
+- Batasi pixel ratio, jeda render di luar viewport/tab tersembunyi, dan
+  hindari efek yang menghalangi keterbacaan, fokus keyboard, atau target
+  sentuh.
+- Jangan menampilkan metrik performa seolah hasil pengukuran kecuali
+  berasal dari pengujian nyata pada perangkat yang disebutkan.
