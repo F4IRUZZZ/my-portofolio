@@ -40,6 +40,7 @@ export async function upsertProfile(
       githubUrl: data.githubUrl || null,
       linkedinUrl: data.linkedinUrl || null,
       cvUrl: data.cvUrl || null,
+      profileImageUrl: data.profileImageUrl || null,
       updatedAt: new Date(),
     };
     if (existing[0]) {

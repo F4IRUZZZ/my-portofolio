@@ -129,6 +129,7 @@ export const profileSchema = z.object({
   githubUrl: optionalUrl,
   linkedinUrl: optionalUrl,
   cvUrl: optionalUrl,
+  profileImageUrl: optionalUrl,
 });
 
 export type ProjectInput = z.infer<typeof projectSchema>;

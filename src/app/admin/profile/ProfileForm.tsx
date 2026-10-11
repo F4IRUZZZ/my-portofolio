@@ -72,6 +72,15 @@ export function ProfileForm({ profile }: { profile: AdminProfile }) {
       </div>
 
       <FormField
+        id="profileImageUrl"
+        label="URL foto profil (opsional)"
+        hint="Kosongkan untuk menampilkan siluet netral."
+        error={err(state, "profileImageUrl")}
+      >
+        <input id="profileImageUrl" name="profileImageUrl" type="url" placeholder="https://…" defaultValue={val(state, profile?.profileImageUrl, "profileImageUrl")} className={inputClass} />
+      </FormField>
+
+      <FormField
         id="cvUrl"
         label="URL CV (opsional)"
         hint="Kosongkan bila belum ada — tautan CV tidak ditampilkan."

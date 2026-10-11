@@ -3,6 +3,7 @@ import { PrimaryButton, SecondaryButton } from "@/components/ui/Buttons";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { TechnologyTag } from "@/components/ui/TechnologyTag";
+import { ProfilePhoto } from "@/components/ui/ProfilePhoto";
 import { Reveal } from "@/components/ui/Reveal";
 import { getProfile, interests, techStacks } from "@/lib/queries";
 
@@ -21,6 +22,12 @@ export default async function AboutPage() {
         <Container>
           <Reveal>
             <SectionHeading level={1} eyebrow="Profil" title="Tentang Saya" />
+            <div className="mt-8 max-w-xs">
+              <ProfilePhoto
+                imageUrl={profile.profileImageUrl}
+                name={profile.fullName}
+              />
+            </div>
             <div className="mt-6 flex max-w-3xl flex-col gap-4 leading-relaxed text-muted">
               {profile.bio.map((paragraph) => (
                 <p key={paragraph.slice(0, 24)}>{paragraph}</p>
