@@ -53,7 +53,7 @@ export default async function Home() {
               </p>
               <h1
                 id="hero-heading"
-                className="mt-4 text-4xl font-bold leading-tight tracking-tight text-foreground sm:text-5xl"
+                className="mt-4 font-display text-4xl font-bold leading-tight tracking-tight text-foreground sm:text-5xl"
               >
                 {profile.tagline}
               </h1>

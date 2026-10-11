@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { ArrowRight, ImageIcon, ZoomIn } from "lucide-react";
-import { useState, type MouseEvent, type ReactNode } from "react";
+import { useRef, useState, type MouseEvent, type ReactNode } from "react";
 import { ProjectModal } from "./ProjectModal";
 import { StatusBadge, type WorkStatus } from "./StatusBadge";
 import { TechnologyTag } from "./TechnologyTag";
@@ -31,6 +31,8 @@ export function ProjectCard({
   cover,
 }: ProjectCardProps) {
   const [previewOpen, setPreviewOpen] = useState(false);
+  const cardRef = useRef<HTMLElement>(null);
+  const rafRef = useRef(0);
   const visibleTech = technologies.slice(0, MAX_VISIBLE_TECH);
   const hiddenCount = technologies.length - visibleTech.length;
 
@@ -40,9 +42,48 @@ export function ProjectCard({
     setPreviewOpen(true);
   }
 
+  // Tilt 3D halus + spotlight mengikuti kursor. Hanya mouse presisi tanpa
+  // reduced-motion; handler client-only sehingga aman untuk hydration.
+  function motionAllowed() {
+    return (
+      window.matchMedia("(pointer: fine)").matches &&
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    );
+  }
+
+  function handleTilt(event: MouseEvent) {
+    const node = cardRef.current;
+    if (!node || !motionAllowed()) return;
+    cancelAnimationFrame(rafRef.current);
+    const rect = node.getBoundingClientRect();
+    rafRef.current = requestAnimationFrame(() => {
+      const px = (event.clientX - rect.left) / rect.width - 0.5;
+      const py = (event.clientY - rect.top) / rect.height - 0.5;
+      node.style.transform = `perspective(900px) rotateX(${(-py * 5).toFixed(2)}deg) rotateY(${(px * 6).toFixed(2)}deg)`;
+      node.style.setProperty("--tilt-x", `${Math.round(px * 100)}%`);
+      node.style.setProperty("--tilt-y", `${Math.round(py * 100)}%`);
+    });
+  }
+
+  function resetTilt() {
+    const node = cardRef.current;
+    if (!node) return;
+    cancelAnimationFrame(rafRef.current);
+    node.style.transform = "";
+  }
+
   return (
     <>
-      <article className="flex h-full flex-col overflow-hidden rounded-card border border-border bg-surface transition-colors duration-200 hover:bg-elevated">
+      <article
+        ref={cardRef}
+        onMouseMove={handleTilt}
+        onMouseLeave={resetTilt}
+        className="group/card relative flex h-full flex-col overflow-hidden rounded-card border border-border bg-surface transition-[transform,background-color,border-color] duration-200 hover:border-[rgba(255,107,44,0.45)] hover:bg-elevated"
+      >
+        <div
+          aria-hidden="true"
+          className="tilt-spotlight pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-200 group-hover/card:opacity-100"
+        />
         <div className="relative aspect-video w-full overflow-hidden bg-elevated">
           {cover ?? (
             <div
@@ -72,7 +113,7 @@ export function ProjectCard({
             </span>
             <StatusBadge status={workStatus} />
           </div>
-          <h3 className="text-lg font-semibold leading-snug text-foreground">
+          <h3 className="text-lg font-semibold leading-snug text-foreground transition-transform duration-200 group-hover/card:translate-y-[2px]">
             <Link href={href} className="hover:text-accent-hover">
               {title}
             </Link>

@@ -96,6 +96,15 @@ body {
   mask-image: radial-gradient(ellipse 90% 70% at 50% 20%, black 30%, transparent 75%);
 }
 
+/* Spotlight kartu mengikuti kursor (variabel --tilt-x/--tilt-y dari JS). */
+.tilt-spotlight {
+  background: radial-gradient(
+    320px circle at var(--tilt-x, 50%) var(--tilt-y, 50%),
+    rgba(255, 107, 44, 0.12),
+    transparent 70%
+  );
+}
+
 /*
  * Reveal saat scroll: fade + naik ringan. Digerakkan oleh komponen
  * `Reveal` (IntersectionObserver). Status tersembunyi hanya diterapkan
