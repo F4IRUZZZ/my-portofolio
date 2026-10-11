@@ -116,7 +116,44 @@ async function main() {
             "Dalam pengerjaan. Hanya informasi dan aset yang telah mendapat izin yang dipublikasikan.",
           repositoryUrl: null,
           demoUrl: null,
+          coverImageUrl: "/documents/konsultasi-izinsatset.jpg",
           sortOrder: 2,
+          publishedAt,
+        },
+        {
+          title: "FamVault — Webapp Pencatat Keuangan",
+          slug: "famvault-pencatat-keuangan",
+          summary:
+            "Aplikasi web pencatat keuangan pribadi dengan dashboard, transaksi, hutang, riwayat, dan grafik pengeluaran per kategori. Status dalam pengerjaan: kurang fitur login dan perbaikan beberapa bug.",
+          category: "Web Development",
+          role: "Student Developer (proyek pribadi)",
+          workStatus: "In Progress",
+          isFeatured: true,
+          publicationStatus: "published",
+          period: null,
+          context:
+            "Proyek pribadi untuk belajar membangun aplikasi web modern: dashboard keuangan dengan ringkasan masuk/keluar, saldo per periode, pencatatan transaksi dan hutang, serta grafik pengeluaran per kategori.",
+          contributions: [
+            "Membangun dashboard, halaman transaksi, hutang, riwayat, dan pengaturan dengan Next.js dan Tailwind CSS.",
+            "Mengembangkan fitur grafik pengeluaran per kategori dan filter periode Minggu/Bulan/Semua Waktu.",
+          ],
+          features: [
+            "Area fitur yang terlihat: dashboard ringkasan, transaksi masuk/keluar, bayar hutang, filter periode, grafik per kategori, dan riwayat. Masih ada bug yang sedang diperbaiki dan fitur login belum tersedia.",
+          ],
+          process: [
+            "Merancang alur pencatatan keuangan sederhana sebelum mengimplementasikan tampilan.",
+            "Mengembangkan antarmuka gelap yang konsisten antar halaman.",
+          ],
+          challenges:
+            "Menyeimbangkan kelengkapan fitur dengan kualitas kode sambil memperbaiki bug yang ditemukan selama pengembangan.",
+          learnings:
+            "Pengelolaan state, pemodelan data transaksi dan hutang, serta pentingnya autentikasi sebelum data sensitif disimpan.",
+          currentState:
+            "Dalam pengerjaan: kurang fitur login dan perbaikan beberapa bug. Screenshot menampilkan data kosong (tanpa data keuangan asli).",
+          repositoryUrl: "https://github.com/F4IRUZZZ/keuangan-next",
+          demoUrl: null,
+          coverImageUrl: "/documents/famvault-dashboard.jpg",
+          sortOrder: 3,
           publishedAt,
         },
       ])
@@ -125,6 +162,7 @@ async function main() {
     const techBySlug: Record<string, string[]> = {
       "sistem-layanan-ktm-hilang": ["PHP", "CSS", "MySQL", "MVC"],
       "website-cms-konsultasi": ["Next.js", "React", "Tailwind CSS"],
+      "famvault-pencatat-keuangan": ["Next.js", "Tailwind CSS"],
     };
     for (const row of insertedProjects) {
       const techs = techBySlug[row.slug] ?? [];
@@ -205,7 +243,7 @@ async function main() {
       },
     ]);
 
-  console.log("Seed selesai: profil, 2 proyek, 1 prestasi, 2 pengalaman.");
+  console.log("Seed selesai: profil, 3 proyek, 1 prestasi, 3 pengalaman.");
 }
 
 main().catch((error) => {
