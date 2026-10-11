@@ -34,7 +34,7 @@ export function WebglBackdrop() {
   }, [mounted]);
 
   return (
-    <div aria-hidden="true" className="webgl-backdrop">
+    <div aria-hidden="true" className="webgl-backdrop pointer-events-none">
       <div className="forge-grid" />
       {density === "static" ? null : <AmbientScene density={density} />}
     </div>

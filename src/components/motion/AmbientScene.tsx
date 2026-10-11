@@ -10,6 +10,7 @@ const VIOLET = "#818cf8";
 function ParticleField({ density }: { density: "low" | "high" }) {
   const pointsRef = useRef<THREE.Points>(null);
   const spin = useRef(0);
+  const elapsed = useRef(0);
   const pointer = useRef({ x: 0, y: 0 });
   const count = density === "high" ? 1400 : 600;
 
@@ -58,20 +59,21 @@ function ParticleField({ density }: { density: "low" | "high" }) {
     };
   }, [geometry]);
 
-  useFrame((state, delta) => {
+  useFrame((_state, delta) => {
     const points = pointsRef.current;
     if (!points) return;
     const step = Math.min(delta, 0.05);
     const scroll = window.scrollY;
 
     spin.current += step * 0.025;
+    elapsed.current += step;
     points.rotation.y = spin.current + scroll * 0.00012;
     points.rotation.x +=
       (pointer.current.y * 0.12 - points.rotation.x) * Math.min(1, step * 1.5);
     points.position.x +=
       (pointer.current.x * 0.25 - points.position.x) * Math.min(1, step * 1.2);
     points.position.y =
-      Math.sin(state.clock.elapsedTime * 0.12) * 0.12 -
+      Math.sin(elapsed.current * 0.12) * 0.12 -
       (scroll % Math.max(window.innerHeight, 1)) * 0.00008;
   });
 
