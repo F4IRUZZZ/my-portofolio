@@ -19,11 +19,11 @@ export function SectionHeading({
   return (
     <div className={`max-w-2xl ${alignClass}`}>
       {eyebrow ? (
-        <p className="text-sm font-medium tracking-wide text-accent">
+        <p className="font-mono text-xs font-medium uppercase tracking-[0.08em] text-accent">
           {eyebrow}
         </p>
       ) : null}
-      <Tag className="mt-2 text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+      <Tag className="mt-2 font-display text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
         {title}
       </Tag>
       {description ? (
